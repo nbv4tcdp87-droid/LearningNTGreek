@@ -33,7 +33,14 @@ window.COURSE = window.COURSE || {};
     ['Ω', 'ω', 'omega', 'ὦ μέγα', 'ō', 'o as in tone', 'oh', 'tone']
   ];
 
-  C.greekNumerals = ['', 'αʹ', 'βʹ', 'γʹ', 'δʹ', 'εʹ', 'ϛʹ', 'ζʹ', 'ηʹ', 'θʹ', 'ιʹ'];
+  C.greekNumerals = ['', 'αʹ', 'βʹ', 'γʹ', 'δʹ', 'εʹ', 'ϛʹ', 'ζʹ', 'ηʹ', 'θʹ', 'ιʹ',
+    'ιαʹ', 'ιβʹ', 'ιγʹ', 'ιδʹ', 'ιεʹ', 'ιϛʹ', 'ιζʹ', 'ιηʹ', 'ιθʹ', 'κʹ'];
+
+  // Units group lessons in the rail and on the home page. `first` is the unit's first lesson number.
+  C.units = [
+    { n: 1, first: 1, title: 'From the alphabet to “I am”' },
+    { n: 2, first: 11, title: 'From the third declension to the subjunctive' }
+  ];
 
   /* ---------- Paradigms ---------- */
   const P = C.para = {};
@@ -66,7 +73,10 @@ window.COURSE = window.COURSE || {};
     n: { sg: ['τό', 'τοῦ', 'τῷ', 'τό'], pl: ['τά', 'τῶν', 'τοῖς', 'τά'] }
   };
 
-  // cls: '2' (2nd decl. masc/fem), '2n' (2nd neuter), '1' (1st fem), '1m' (1st masc)
+  // cls: '2' (2nd decl. masc/fem), '2n' (2nd neuter), '1' (1st fem), '1m' (1st masc),
+  //      '3' (3rd masc/fem), '3n' (3rd neuter)
+  // Optional: dict (genitive as printed in the dictionary entry, for 3rd decl.),
+  //           E (per-noun ending lengths, overriding P.endLen[cls]), voc (vocative).
   P.nouns = {
     logos: { lemma: 'λόγος', g: 'm', cls: '2', gloss: 'word', en: 'word', enPl: 'words', L: 5,
       sg: ['λόγος', 'λόγου', 'λόγῳ', 'λόγον'], pl: ['λόγοι', 'λόγων', 'λόγοις', 'λόγους'], voc: 'λόγε' },
@@ -115,7 +125,27 @@ window.COURSE = window.COURSE || {};
     prophetes: { lemma: 'προφήτης', g: 'm', cls: '1m', gloss: 'prophet', L: 7,
       sg: ['προφήτης', 'προφήτου', 'προφήτῃ', 'προφήτην'], pl: ['προφῆται', 'προφητῶν', 'προφήταις', 'προφήτας'] },
     mathetes: { lemma: 'μαθητής', g: 'm', cls: '1m', gloss: 'disciple', L: 7,
-      sg: ['μαθητής', 'μαθητοῦ', 'μαθητῇ', 'μαθητήν'], pl: ['μαθηταί', 'μαθητῶν', 'μαθηταῖς', 'μαθητάς'] }
+      sg: ['μαθητής', 'μαθητοῦ', 'μαθητῇ', 'μαθητήν'], pl: ['μαθηταί', 'μαθητῶν', 'μαθηταῖς', 'μαθητάς'] },
+    // Third declension (Lesson 11). In σάρξ and σαρξί(ν) the highlighted ξ is the stem's κ fused with σ.
+    sarx: { lemma: 'σάρξ', dict: 'σαρκός', g: 'f', cls: '3', gloss: 'flesh', L: 11,
+      sg: ['σάρξ', 'σαρκός', 'σαρκί', 'σάρκα'], pl: ['σάρκες', 'σαρκῶν', 'σαρξί(ν)', 'σάρκας'] },
+    elpis: { lemma: 'ἐλπίς', dict: '-ίδος', g: 'f', cls: '3', gloss: 'hope', L: 11,
+      sg: ['ἐλπίς', 'ἐλπίδος', 'ἐλπίδι', 'ἐλπίδα'], pl: ['ἐλπίδες', 'ἐλπίδων', 'ἐλπίσι(ν)', 'ἐλπίδας'] },
+    onoma: { lemma: 'ὄνομα', dict: '-ατος', g: 'n', cls: '3n', gloss: 'name', en: 'name', enPl: 'names', L: 11,
+      sg: ['ὄνομα', 'ὀνόματος', 'ὀνόματι', 'ὄνομα'], pl: ['ὀνόματα', 'ὀνομάτων', 'ὀνόμασι(ν)', 'ὀνόματα'] },
+    pneuma: { lemma: 'πνεῦμα', dict: '-ατος', g: 'n', cls: '3n', gloss: 'spirit, Spirit', L: 11,
+      sg: ['πνεῦμα', 'πνεύματος', 'πνεύματι', 'πνεῦμα'], pl: ['πνεύματα', 'πνευμάτων', 'πνεύμασι(ν)', 'πνεύματα'] },
+    soma: { lemma: 'σῶμα', dict: '-ατος', g: 'n', cls: '3n', gloss: 'body', L: 11,
+      sg: ['σῶμα', 'σώματος', 'σώματι', 'σῶμα'], pl: ['σώματα', 'σωμάτων', 'σώμασι(ν)', 'σώματα'] },
+    pater: { lemma: 'πατήρ', dict: 'πατρός', g: 'm', cls: '3', gloss: 'father', L: 11, voc: 'πάτερ',
+      sg: ['πατήρ', 'πατρός', 'πατρί', 'πατέρα'], pl: ['πατέρες', 'πατέρων', 'πατράσι(ν)', 'πατέρας'],
+      E: { sg: [0, 2, 1, 1], pl: [2, 2, 2, 2] } },
+    aner: { lemma: 'ἀνήρ', dict: 'ἀνδρός', g: 'm', cls: '3', gloss: 'man, husband', L: 11, voc: 'ἄνερ',
+      sg: ['ἀνήρ', 'ἀνδρός', 'ἀνδρί', 'ἄνδρα'], pl: ['ἄνδρες', 'ἀνδρῶν', 'ἀνδράσι(ν)', 'ἄνδρας'],
+      E: { sg: [0, 2, 1, 1], pl: [2, 2, 2, 2] } },
+    gyne: { lemma: 'γυνή', dict: 'γυναικός', g: 'f', cls: '3', gloss: 'woman, wife', L: 11, voc: 'γύναι',
+      sg: ['γυνή', 'γυναικός', 'γυναικί', 'γυναῖκα'], pl: ['γυναῖκες', 'γυναικῶν', 'γυναιξί(ν)', 'γυναῖκας'],
+      E: { sg: [0, 2, 1, 1], pl: [2, 2, 2, 2] } }
   };
 
   // Ending lengths (letters) used to highlight endings in tables
@@ -124,7 +154,9 @@ window.COURSE = window.COURSE || {};
     '2n': { sg: [2, 2, 1, 2], pl: [1, 2, 3, 1] },
     '1': { sg: [1, 2, 1, 2], pl: [2, 2, 3, 2] },
     '1m': { sg: [2, 2, 1, 2], pl: [2, 2, 3, 2] },
-    '2n-o': { sg: [1, 2, 1, 1], pl: [1, 2, 3, 1] }
+    '2n-o': { sg: [1, 2, 1, 1], pl: [1, 2, 3, 1] },
+    '3': { sg: [1, 2, 1, 1], pl: [2, 2, 2, 2] },
+    '3n': { sg: [0, 2, 1, 0], pl: [1, 2, 2, 1] }
   };
 
   P.adj = {
@@ -282,7 +314,22 @@ window.COURSE = window.COURSE || {};
     { g: 'νῦν', en: 'now', f: 147, L: 10, pos: 'adv.' },
     { g: 'οὖν', en: 'therefore, then, so', f: 499, L: 10, pos: 'conj.', n: 'postpositive' },
     { g: 'ἀμήν', en: 'amen, truly', f: 129, L: 10, pos: 'particle', n: 'from Hebrew' },
-    { g: 'πατήρ', d: 'πατρός, ὁ', en: 'father', f: 413, L: 10, pos: 'noun', n: 'third declension (Unit 2)' }
+    { g: 'πατήρ', d: 'πατρός, ὁ', en: 'father', f: 413, L: 10, pos: 'noun', n: 'third declension (Lesson 11); vocative πάτερ' },
+    // Lesson 11 — third declension
+    { g: 'πνεῦμα', d: '-ατος, τό', en: 'spirit, Spirit; wind, breath', f: 379, L: 11, pos: 'noun', n: 'pneumatic' },
+    { g: 'ὄνομα', d: '-ατος, τό', en: 'name', f: 231, L: 11, pos: 'noun', n: 'onomatopoeia; Latin nomen' },
+    { g: 'ἀνήρ', d: 'ἀνδρός, ὁ', en: 'man, husband', f: 216, L: 11, pos: 'noun', n: 'android, Andrew' },
+    { g: 'γυνή', d: 'γυναικός, ἡ', en: 'woman, wife', f: 215, L: 11, pos: 'noun', n: 'gynecology; vocative γύναι' },
+    { g: 'χάρις', d: '-ιτος, ἡ', en: 'grace, favor; thanks', f: 155, L: 11, pos: 'noun', n: 'charisma; accusative χάριν' },
+    { g: 'σάρξ', d: 'σαρκός, ἡ', en: 'flesh, body; human nature', f: 147, L: 11, pos: 'noun', n: 'sarcophagus' },
+    { g: 'σῶμα', d: '-ατος, τό', en: 'body', f: 142, L: 11, pos: 'noun', n: 'psychosomatic' },
+    { g: 'αἰών', d: '-ῶνος, ὁ', en: 'age, eternity', f: 122, L: 11, pos: 'noun', n: 'eon; εἰς τὸν αἰῶνα, “forever”' },
+    { g: 'αἷμα', d: '-ατος, τό', en: 'blood', f: 97, L: 11, pos: 'noun', n: 'hematology' },
+    { g: 'πούς', d: 'ποδός, ὁ', en: 'foot', f: 93, L: 11, pos: 'noun', n: 'podium, tripod' },
+    { g: 'μήτηρ', d: 'μητρός, ἡ', en: 'mother', f: 83, L: 11, pos: 'noun', n: 'declines like πατήρ; Latin mater' },
+    { g: 'φῶς', d: 'φωτός, τό', en: 'light', f: 73, L: 11, pos: 'noun', n: 'photograph' },
+    { g: 'ῥῆμα', d: '-ατος, τό', en: 'word, saying; thing, matter', f: 68, L: 11, pos: 'noun', n: 'same root as rhetoric' },
+    { g: 'ἐλπίς', d: '-ίδος, ἡ', en: 'hope', f: 53, L: 11, pos: 'noun' }
   ];
   C.vocab = V;
 

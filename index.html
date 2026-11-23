@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>En Archē Greek</title>
-<meta name="description" content="A free beginner's course in Septuagint and New Testament Greek: ten lessons from the alphabet to εἰμί, with exercises, spaced-repetition vocabulary and grammar drills.">
+<meta name="description" content="A free beginner's course in Septuagint and New Testament Greek, from the alphabet up, with exercises, spaced-repetition vocabulary and grammar drills.">
 <meta property="og:title" content="En Archē Greek">
 <meta property="og:description" content="Learn Septuagint and New Testament Greek from the first letter.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%237A2A63'/%3E%3Ctext x='32' y='46' font-family='Georgia,serif' font-size='40' text-anchor='middle' fill='%23fff'%3E%CE%91%3C/text%3E%3C/svg%3E">
@@ -66,7 +66,7 @@ small { font-size: .85em; }
 .gk { font-family: var(--f-greek); font-size: 1.1em; line-height: 1; font-feature-settings: "kern"; }
 h1 .gk, h2 .gk, h3 .gk, h4 .gk, .display .gk { font-family: inherit; font-size: inherit; line-height: inherit; }
 .ns { display: inline-block; line-height: .95; border-top: 2px solid var(--mark); padding-top: 1px; }
-.eyebrow .num, .eyebrow .gk { text-transform: none; letter-spacing: 0; }
+.eyebrow .num, .eyebrow .gk, .tbl thead th .gk, .tbl .grp th .gk { text-transform: none; letter-spacing: 0; }
 .eyebrow { font-size: .78rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
 .muted { color: var(--muted); }
 
@@ -379,6 +379,7 @@ textarea { min-height: 72px; resize: vertical; }
 <script src="data-core.js"></script>
 <script src="data-lessons-1.js"></script>
 <script src="data-lessons-2.js"></script>
+<script src="data-lessons-3.js"></script>
 <script>
 (function () {
 'use strict';
@@ -392,6 +393,9 @@ const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { c
 const pick = a => a[Math.floor(Math.random() * a.length)];
 const reduceMotion = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
 const DAY = 864e5;
+// Units (C.units, ascending by first lesson)
+const unitLessons = u => { const next = C.units.find(x => x.first > u.first); return C.lessons.filter(l => l.n >= u.first && (!next || l.n < next.first)); };
+const unitOf = n => C.units.filter(u => n >= u.first).pop();
 
 /* ================= Transliteration ================= */
 const BASE = { 'α': 'a', 'β': 'b', 'γ': 'g', 'δ': 'd', 'ε': 'e', 'ζ': 'z', 'η': 'ē', 'θ': 'th', 'ι': 'i', 'κ': 'k', 'λ': 'l', 'μ': 'm', 'ν': 'n', 'ξ': 'x', 'ο': 'o', 'π': 'p', 'ρ': 'r', 'σ': 's', 'ς': 's', 'τ': 't', 'υ': 'y', 'φ': 'ph', 'χ': 'ch', 'ψ': 'ps', 'ω': 'ō' };
@@ -500,7 +504,7 @@ function nextLabel(id, g) {
   return d === 1 ? 'in 1 day' : 'in ' + d + ' days';
 }
 const vocabFor = lessons => C.vocab.filter(w => lessons.includes(w.L));
-function dueCount(lessons) { const now = Date.now(); return vocabFor(lessons || [4, 5, 6, 7, 8, 9, 10]).filter(w => isDue(cardOf(w.id), now)).length; }
+function dueCount(lessons) { const now = Date.now(); return vocabFor(lessons || VOCAB_LESSONS).filter(w => isDue(cardOf(w.id), now)).length; }
 const learnedCount = () => C.vocab.filter(w => (cardOf(w.id) || {}).b >= 3).length;
 const masteryPill = id => { const c = cardOf(id); if (!c || !c.b) return '<span class="pill">New</span>'; if (c.b >= 3) return '<span class="pill known">Known</span>'; return '<span class="pill learning">Learning</span>'; };
 
@@ -539,8 +543,9 @@ function nounGloss(n, num, c) {
   const w = num === 'sg' ? n.en : n.enPl;
   return ['the ' + w, 'of the ' + w, 'to/for the ' + w, 'the ' + w + ' (object)'][c];
 }
+const endsOf = n => n.E || P.endLen[n.cls];
 function nounTable(key, art, gloss) {
-  const n = P.nouns[key]; const E = P.endLen[n.cls];
+  const n = P.nouns[key]; const E = endsOf(n);
   const ar = g => P.article[n.g];
   let rows = '';
   for (let c = 0; c < 4; c++) {
@@ -555,7 +560,7 @@ function nounTable(key, art, gloss) {
   const art0 = P.article[n.g].sg[0];
   return '<div class="para"><div class="para-title"><b>' + esc(n.lemma) + ', ' + esc(dictGen(n)) + ', ' + esc(art0) + '</b>, “' + esc(n.gloss) + '”</div><div class="tbl-wrap"><table class="tbl"><thead><tr><th></th><th>Singular</th><th>Plural</th></tr></thead><tbody>' + rows + '</tbody></table></div></div>';
 }
-function dictGen(n) { const g = nfc(n.sg[1]); const E = P.endLen[n.cls].sg[1]; return '-' + g.slice(g.length - E); }
+function dictGen(n) { if (n.dict) return n.dict; const g = nfc(n.sg[1]); const E = endsOf(n).sg[1]; return '-' + g.slice(g.length - E); }
 function nounsTable(keys, art) {
   const ns = keys.map(k => P.nouns[k]);
   let head = '<tr><th></th>' + ns.map(n => '<th>' + esc(n.lemma) + ' · ' + esc(n.gloss) + '</th>').join('') + '</tr>';
@@ -565,7 +570,7 @@ function nounsTable(keys, art) {
     for (let c = 0; c < 4; c++) {
       rows += '<tr><th scope="row">' + P.cases[c] + '</th>' + ns.map(n => {
         const a = art ? '<span class="art">' + esc(P.article[n.g][num][c]) + '</span> ' : '';
-        return cell(a + withEnd(n[num][c], P.endLen[n.cls][num][c]));
+        return cell(a + withEnd(n[num][c], endsOf(n)[num][c]));
       }).join('') + '</tr>';
     }
   });
@@ -604,11 +609,13 @@ function renderPara(spec, opts) {
 const PARA_LIST = [
   ['Verbs', [['verb:luo', 'λύω, present active'], ['eimi', 'εἰμί, present']]],
   ['The article', [['article', 'ὁ, ἡ, τό']]],
-  ['Nouns', [['noun:logos', 'λόγος (2nd decl. masc.)'], ['noun:ergon', 'ἔργον (2nd decl. neut.)'], ['nouns:arche,hemera,doxa', 'ἀρχή · ἡμέρα · δόξα (1st decl. fem.)'], ['noun:prophetes', 'προφήτης (1st decl. masc.)']]],
+  ['Nouns', [['noun:logos', 'λόγος (2nd decl. masc.)'], ['noun:ergon', 'ἔργον (2nd decl. neut.)'], ['nouns:arche,hemera,doxa', 'ἀρχή · ἡμέρα · δόξα (1st decl. fem.)'], ['noun:prophetes', 'προφήτης (1st decl. masc.)'],
+    ['nouns:sarx,elpis', 'σάρξ · ἐλπίς (3rd decl. fem.)'], ['noun:onoma', 'ὄνομα (3rd decl. neut.)'], ['nouns:pater,aner,gyne', 'πατήρ · ἀνήρ · γυνή (3rd decl.)']]],
   ['Adjectives', [['adj:agathos', 'ἀγαθός, -ή, -όν'], ['adj:hagios', 'ἅγιος, -α, -ον']]],
   ['Pronouns', [['pron:ego-su', 'ἐγώ and σύ'], ['pron:autos', 'αὐτός, -ή, -ό']]]
 ];
-const PARA_OPTS = { 'noun:logos': { art: 1 }, 'noun:ergon': { art: 1 }, 'nouns:arche,hemera,doxa': { art: 1 }, 'noun:prophetes': { art: 1 }, 'verb:luo': { gloss: 1 } };
+const PARA_OPTS = { 'noun:logos': { art: 1 }, 'noun:ergon': { art: 1 }, 'nouns:arche,hemera,doxa': { art: 1 }, 'noun:prophetes': { art: 1 }, 'verb:luo': { gloss: 1 },
+  'nouns:sarx,elpis': { art: 1 }, 'noun:onoma': { art: 1 }, 'nouns:pater,aner,gyne': { art: 1 } };
 
 /* ================= Custom blocks ================= */
 function alphabetBlock(phonetic) {
@@ -840,17 +847,21 @@ function icon(name) {
 let currentRoute = 'home';
 function renderRail() {
   const due = dueCount();
-  const lessons = C.lessons.map(l => {
+  const lessonLink = l => {
     const s = lessonState(l.n);
     const st = s.done ? 'done' : s.seen ? 'seen' : '';
     const label = s.done ? 'Complete' : s.seen ? 'Started' : 'Not started';
     return '<a class="nav-link" href="#lesson-' + l.n + '"' + (currentRoute === 'lesson-' + l.n ? ' aria-current="page"' : '') + '><span class="num">' + C.greekNumerals[l.n] + '</span><span>' + esc(l.title) + '</span><span class="dot ' + st + '" title="' + label + '"><span hidden>' + label + '</span></span></a>';
+  };
+  const lessons = C.units.map(u => {
+    const ls = unitLessons(u);
+    return ls.length ? '<div class="nav-group"><span class="eyebrow">Unit ' + u.n + ' · Lessons</span>' + ls.map(lessonLink).join('') + '</div>' : '';
   }).join('');
   const link = (r, ic, t, extra) => '<a class="nav-link" href="#' + r + '"' + (currentRoute === r ? ' aria-current="page"' : '') + '>' + icon(ic) + '<span>' + t + '</span>' + (extra || '<span></span>') + '</a>';
   $('#rail').innerHTML =
     '<a class="brand" href="#home"><span class="mark">ΕΝ ΑΡΧΗ</span><span class="sub">Septuagint &amp; New Testament Greek</span></a>' +
     '<div class="nav-group">' + link('home', 'home', 'Home') + '</div>' +
-    '<div class="nav-group"><span class="eyebrow">Unit 1 · Lessons</span>' + lessons + '</div>' +
+    lessons +
     '<div class="nav-group"><span class="eyebrow">Practice</span>' +
     link('alphabet', 'alpha', 'Alphabet') +
     link('vocab', 'cards', 'Vocabulary', due ? '<span class="badge" title="Cards due">' + due + '</span>' : '<span></span>') +
@@ -878,30 +889,34 @@ function viewHome() {
   const doneN = C.lessons.filter(l => lessonState(l.n).done).length;
   const nx = nextLessonNum();
   const started = C.lessons.some(l => lessonState(l.n).seen);
-  const map = C.lessons.map(l => {
+  const mapItem = l => {
     const s = lessonState(l.n);
     const st = s.done ? '<span class="st done">✓ ' + s.best + '%</span>' : s.seen ? '<span class="st">Started</span>' : '<span class="st"></span>';
     return '<a class="map-item" href="#lesson-' + l.n + '"><span class="num">' + C.greekNumerals[l.n] + '</span><span class="t">' + esc(l.title) + '</span>' + st + '<span class="b">' + esc(l.blurb) + '</span></a>';
+  };
+  const unitMaps = C.units.map(u => {
+    const ls = unitLessons(u);
+    return ls.length ? '<section><div class="sec-head"><span class="eyebrow">Unit ' + u.n + '</span><h2>' + esc(u.title) + '</h2></div><div class="map">' + ls.map(mapItem).join('') + '</div></section>' : '';
   }).join('');
   return '<div class="page wide">' +
     '<section class="hero">' +
       '<figure class="codex" style="margin:0"><div class="lines" aria-label="John 1:1 in uncial letters"><span class="ini">Ε</span>ΝΑΡΧΗΗΝΟΛΟΓΟΣ<br>ΚΑΙΟΛΟΓΟΣΗΝ<br>ΠΡΟΣΤΟΝ<span class="ns">ΘΝ</span><br>ΚΑΙ<span class="ns">ΘΣ</span>ΗΝΟΛΟΓΟΣ</div>' +
       '<figcaption>John 1:1 as a fourth-century codex would write it: capitals, no spaces, and the sacred name ΘΕΟΣ shortened to <span class="ns">ΘΝ</span> and <span class="ns">ΘΣ</span>.</figcaption></figure>' +
-      '<div class="hero-text"><span class="eyebrow">Septuagint &amp; New Testament Greek · Unit 1</span>' +
+      '<div class="hero-text"><span class="eyebrow">Septuagint &amp; New Testament Greek</span>' +
         '<h1>Read the Greek Bible, starting from the first letter.</h1>' +
-        '<p class="lede">Ten lessons take you from the alphabet to reading verses from Genesis, the Psalms, the Gospels and Paul, with exercises in every lesson and separate drills for vocabulary and grammar.</p>' +
+        '<p class="lede">Start from the alphabet and work up to reading verses from Genesis, the Psalms, the Gospels and Paul, with exercises in every lesson and separate drills for the alphabet, vocabulary and grammar.</p>' +
         '<div class="incipits"><p><span class="gk">Ἐν ἀρχῇ ἐποίησεν ὁ θεός…</span> Genesis 1:1, LXX</p><p><span class="gk">Ἐν ἀρχῇ ἦν ὁ λόγος…</span> John 1:1</p></div>' +
         '<div class="row"><a class="btn primary" href="#lesson-' + nx + '">' + (started ? 'Continue: Lesson ' + nx : 'Start Lesson 1: The Alphabet') + '</a><a class="btn" href="#vocab">Vocabulary</a></div>' +
       '</div>' +
     '</section>' +
     '<div class="progress-strip"><span>Lessons complete <b>' + doneN + ' / ' + C.lessons.length + '</b></span><span>Words known <b>' + learnedCount() + ' / ' + C.vocab.length + '</b></span><span>Cards due <b>' + dueCount() + '</b></span></div>' +
-    '<section><div class="sec-head"><span class="eyebrow">Unit 1</span><h2>From the alphabet to “I am”</h2></div><div class="map">' + map + '</div></section>' +
+    unitMaps +
     '<section><div class="sec-head"><h2>How to use this course</h2></div><div class="how">' +
       '<div><h3>1 · Work through a lesson</h3><p>Read the explanation, study the tables, tap through the verses, then do the exercises. Score 70% or higher to complete the lesson.</p></div>' +
       '<div><h3>2 · Learn the words</h3><p>Each lesson from 4 onward adds 8 to 16 high-frequency words. Short daily flashcard sessions space out your reviews so words stick.</p></div>' +
       '<div><h3>3 · Drill the forms</h3><p>Grammar review generates endless parsing and form-building questions from the paradigms you have learned, plus mixed review of past lessons.</p></div>' +
     '</div></section>' +
-    '<section><div class="sec-head"><span class="eyebrow">Planned for Unit 2</span><h2>The road ahead</h2></div><div class="ahead"><span>Third declension</span><span>Contract verbs</span><span>Imperfect &amp; future</span><span>Middle &amp; passive voice</span><span>Aorist</span><span>Demonstratives &amp; relatives</span><span>Participles</span><span>Infinitives &amp; subjunctive</span></div></section>' +
+    '<section><div class="sec-head"><span class="eyebrow">Coming in Unit 2</span><h2>The road ahead</h2></div><div class="ahead"><span>Contract verbs</span><span>Imperfect &amp; future</span><span>Middle &amp; passive voice</span><span>Aorist</span><span>Demonstratives &amp; relatives</span><span>Participles</span><span>Infinitives &amp; subjunctive</span></div></section>' +
   '</div>';
 }
 
@@ -913,7 +928,7 @@ function viewLesson(n) {
   const s = lessonState(n);
   const tocItems = L.sections.map((sec, i) => ['s' + i, sec.h]).concat(words.length ? [['l-vocab', 'Vocabulary']] : []).concat([['l-texts', 'From the text'], ['l-ex', 'Exercises']]);
   let html = '<div class="page">' +
-    '<header class="l-head"><span class="eyebrow"><span class="num">' + C.greekNumerals[n] + '</span> Lesson ' + n + ' of ' + C.lessons.length + (s.done ? ' · Complete, best ' + s.best + '%' : '') + '</span>' +
+    '<header class="l-head"><span class="eyebrow"><span class="num">' + C.greekNumerals[n] + '</span> Unit ' + unitOf(n).n + ' · Lesson ' + n + (s.done ? ' · Complete, best ' + s.best + '%' : '') + '</span>' +
     '<h1>' + esc(L.title) + '</h1><div class="gk-title">' + esc(L.gk) + '</div></header>' +
     '<div class="goals"><span class="eyebrow">In this lesson you will</span><ul>' + L.goals.map(g => '<li>' + esc(g) + '</li>').join('') + '</ul></div>' +
     '<nav class="toc" aria-label="Lesson sections">' + tocItems.map(t => '<button type="button" data-to="' + t[0] + '">' + esc(t[1]) + '</button>').join('') + '</nav>';
@@ -945,8 +960,8 @@ function vocabTable(words, showLesson) {
 }
 
 /* ---------- Vocabulary view ---------- */
-const VOCAB_LESSONS = [4, 5, 6, 7, 8, 9, 10];
-const VOCAB_NAMES = { 4: 'Verbs', 5: 'Nouns I', 6: 'Nouns II', 7: '1st decl.', 8: 'Adjectives', 9: 'Prepositions', 10: 'Pronouns' };
+const VOCAB_LESSONS = [4, 5, 6, 7, 8, 9, 10, 11];
+const VOCAB_NAMES = { 4: 'Verbs', 5: 'Nouns I', 6: 'Nouns II', 7: '1st decl.', 8: 'Adjectives', 9: 'Prepositions', 10: 'Pronouns', 11: '3rd decl.' };
 const ui = { vocabTab: 'cards', vocabSel: null, dir: 'gk', reviewTab: 'parse', parseSets: null, formSets: null, paraPick: 'verb:luo', alphaTab: 'match', alphaModes: ['names', 'sounds'] };
 try { const u = JSON.parse(localStorage.getItem(LS_KEY + '-ui') || 'null'); if (u) Object.assign(ui, u); } catch (e) { /* ignore */ }
 const saveUi = () => { try { localStorage.setItem(LS_KEY + '-ui', JSON.stringify(ui)); } catch (e) { /* ignore */ } };
@@ -957,7 +972,7 @@ function defaultVocabSel() {
 function viewVocab() {
   if (!ui.vocabSelUser || !ui.vocabSel || !ui.vocabSel.length) ui.vocabSel = defaultVocabSel();
   const html = '<div class="page">' +
-    '<header class="l-head"><span class="eyebrow">Practice</span><h1>Vocabulary</h1><p class="muted">' + C.vocab.length + ' high-frequency words from Unit 1. Flashcards bring each word back just before you are likely to forget it.</p></header>' +
+    '<header class="l-head"><span class="eyebrow">Practice</span><h1>Vocabulary</h1><p class="muted">' + C.vocab.length + ' high-frequency words from the lessons. Flashcards bring each word back just before you are likely to forget it.</p></header>' +
     '<div class="panel"><div><span class="eyebrow">Words from lessons</span><div class="setpick" id="vsel" style="margin-top:6px">' +
       VOCAB_LESSONS.map(n => '<button type="button" class="chip" data-l="' + n + '" aria-pressed="' + (ui.vocabSel.includes(n)) + '">' + n + ' · ' + VOCAB_NAMES[n] + '</button>').join('') + '</div></div>' +
     '<div class="tabs" role="tablist">' + [['cards', 'Flashcards'], ['quiz', 'Quick quiz'], ['list', 'Word list']].map(t => '<button type="button" class="tab" role="tab" data-tab="' + t[0] + '" aria-selected="' + (ui.vocabTab === t[0]) + '">' + t[1] + '</button>').join('') + '</div>' +
@@ -1071,7 +1086,7 @@ function wordList(pane, words) {
 /* ---------- Grammar review ---------- */
 const SETS = [
   ['verbs', 'Present verbs', 4], ['eimi', 'εἰμί', 10], ['article', 'Article', 7], ['n2', '2nd declension', 6],
-  ['n1', '1st declension', 7], ['adj', 'Adjectives', 8], ['pron', 'Pronouns', 10]
+  ['n1', '1st declension', 7], ['adj', 'Adjectives', 8], ['pron', 'Pronouns', 10], ['n3', '3rd declension', 11]
 ];
 const CASES = ['nom', 'gen', 'dat', 'acc'], CASE_LONG = { nom: 'nominative', gen: 'genitive', dat: 'dative', acc: 'accusative' };
 const G_LONG = { m: 'masculine', f: 'feminine', n: 'neuter' }, N_LONG = { sg: 'singular', pl: 'plural' }, PER_LONG = { 1: '1st person', 2: '2nd person', 3: '3rd person' };
@@ -1098,11 +1113,12 @@ function buildPool(sets) {
   const gEntries = src => { const e = []; ['m', 'f', 'n'].forEach(g => ['sg', 'pl'].forEach(n => src[g][n].forEach((f, c) => e.push([f, { c: CASES[c], n, g }])))); return e; };
   if (sets.includes('article')) group('ὁ, ἡ, τό', 'the', 'cng', gEntries(P.article));
   const nounSet = cls => Object.values(P.nouns).filter(n => cls.includes(n.cls)).forEach(n => {
-    const e = []; ['sg', 'pl'].forEach(num => (n[num] || []).forEach((f, c) => e.push([f, { c: CASES[c], n: num }])));
+    const e = []; ['sg', 'pl'].forEach(num => (n[num] || []).forEach((f, c) => e.push([f.replace('(ν)', 'ν'), { c: CASES[c], n: num }])));
     group(n.lemma + ' (' + G_LONG[n.g] + ')', n.gloss, 'cn', e);
   });
   if (sets.includes('n2')) nounSet(['2', '2n']);
   if (sets.includes('n1')) nounSet(['1', '1m']);
+  if (sets.includes('n3')) nounSet(['3', '3n']);
   if (sets.includes('adj')) Object.values(P.adj).forEach(a => group(a.lemma, a.gloss, 'cng', gEntries(a)));
   if (sets.includes('pron')) {
     ['ego', 'su'].forEach(k => { const p = P.pron[k]; const e = []; ['sg', 'pl'].forEach(num => p[num].forEach((f, c) => f.split(', ').forEach(x => e.push([x, { c: CASES[c], n: num }])))); group(p.lemma, p.gloss, 'cn', e); });
@@ -1308,7 +1324,7 @@ function alphaChart(pane) {
 /* ---------- Paradigms view ---------- */
 function viewTables() {
   const html = '<div class="page">' +
-    '<header class="l-head"><span class="eyebrow">Reference</span><h1>Paradigms</h1><p class="muted">Every table from Unit 1 in one place. Endings are highlighted.</p></header>' +
+    '<header class="l-head"><span class="eyebrow">Reference</span><h1>Paradigms</h1><p class="muted">Every table from the lessons in one place. Endings are highlighted.</p></header>' +
     '<nav class="toc" aria-label="Paradigm groups">' + PARA_LIST.map((g, i) => '<button type="button" data-to="pg' + i + '">' + esc(g[0]) + '</button>').join('') + '<button type="button" data-to="pgp">Prepositions</button></nav>' +
     PARA_LIST.map((g, i) => '<section class="ls" id="pg' + i + '"><h2>' + esc(g[0]) + '</h2>' + g[1].map(o => renderPara(o[0], Object.assign({}, PARA_OPTS[o[0]] || {}))).join('') + '</section>').join('') +
     '<section class="ls" id="pgp"><h2>Prepositions</h2>' + prepTable() + '</section></div>';

@@ -4,8 +4,9 @@ A free beginner's course in **Septuagint and New Testament Greek**, starting fro
 
 Unit 1 has ten lessons, from the alphabet to εἰμί and the personal pronouns. Each lesson includes explanations, paradigm tables, verses from the LXX and NT with tap-for-meaning glosses, and exercises. The site also has:
 
+- **Alphabet:** matching rounds that pair each letter with its name and with its sound spelled in phonetic English, plus a quick quiz and a chart.
 - **Vocabulary:** 92 high-frequency words with spaced-repetition flashcards, a quick quiz and a searchable word list.
-- **Grammar review:** parsing and form-building drills, paradigm recall, mixed lesson review and an alphabet drill.
+- **Grammar review:** parsing and form-building drills, paradigm recall and mixed lesson review.
 - **Paradigms:** every table in one place.
 
 Pronunciation follows the Erasmian system.

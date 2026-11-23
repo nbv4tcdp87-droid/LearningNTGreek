@@ -4,32 +4,33 @@ window.COURSE = window.COURSE || {};
 (function (C) {
 
   /* ---------- Alphabet (Erasmian) ---------- */
-  // [capital, small, English name, Greek name, transliteration, sound]
+  // [capital, small, English name, Greek name, transliteration, sound,
+  //  phonetic English spelling, key word]  (the last two drive the Alphabet practice page)
   C.alphabet = [
-    ['Α', 'α', 'alpha', 'ἄλφα', 'a', 'a as in father'],
-    ['Β', 'β', 'beta', 'βῆτα', 'b', 'b as in bible'],
-    ['Γ', 'γ', 'gamma', 'γάμμα', 'g', 'g as in go (n before γ, κ, ξ, χ)'],
-    ['Δ', 'δ', 'delta', 'δέλτα', 'd', 'd as in dog'],
-    ['Ε', 'ε', 'epsilon', 'ἒ ψιλόν', 'e', 'e as in get'],
-    ['Ζ', 'ζ', 'zeta', 'ζῆτα', 'z', 'dz as in adze'],
-    ['Η', 'η', 'eta', 'ἦτα', 'ē', 'ey as in obey'],
-    ['Θ', 'θ', 'theta', 'θῆτα', 'th', 'th as in thing'],
-    ['Ι', 'ι', 'iota', 'ἰῶτα', 'i', 'i as in pit; long, as in machine'],
-    ['Κ', 'κ', 'kappa', 'κάππα', 'k', 'k as in kite'],
-    ['Λ', 'λ', 'lambda', 'λάμβδα', 'l', 'l as in lamp'],
-    ['Μ', 'μ', 'mu', 'μῦ', 'm', 'm as in mother'],
-    ['Ν', 'ν', 'nu', 'νῦ', 'n', 'n as in new'],
-    ['Ξ', 'ξ', 'xi', 'ξῖ', 'x', 'x as in axe'],
-    ['Ο', 'ο', 'omicron', 'ὂ μικρόν', 'o', 'o as in often'],
-    ['Π', 'π', 'pi', 'πῖ', 'p', 'p as in pen'],
-    ['Ρ', 'ρ', 'rho', 'ῥῶ', 'r', 'r as in run (lightly rolled)'],
-    ['Σ', 'σ ς', 'sigma', 'σίγμα', 's', 's as in sing'],
-    ['Τ', 'τ', 'tau', 'ταῦ', 't', 't as in top'],
-    ['Υ', 'υ', 'upsilon', 'ὖ ψιλόν', 'y / u', 'like German ü (many say oo)'],
-    ['Φ', 'φ', 'phi', 'φῖ', 'ph', 'ph as in phone'],
-    ['Χ', 'χ', 'chi', 'χῖ', 'ch', 'ch as in Bach (or simply k)'],
-    ['Ψ', 'ψ', 'psi', 'ψῖ', 'ps', 'ps as in lips'],
-    ['Ω', 'ω', 'omega', 'ὦ μέγα', 'ō', 'o as in tone']
+    ['Α', 'α', 'alpha', 'ἄλφα', 'a', 'a as in father', 'ah', 'father'],
+    ['Β', 'β', 'beta', 'βῆτα', 'b', 'b as in bible', 'b', 'bible'],
+    ['Γ', 'γ', 'gamma', 'γάμμα', 'g', 'g as in go (n before γ, κ, ξ, χ)', 'g', 'go'],
+    ['Δ', 'δ', 'delta', 'δέλτα', 'd', 'd as in dog', 'd', 'dog'],
+    ['Ε', 'ε', 'epsilon', 'ἒ ψιλόν', 'e', 'e as in get', 'eh', 'get'],
+    ['Ζ', 'ζ', 'zeta', 'ζῆτα', 'z', 'dz as in adze', 'dz', 'adze'],
+    ['Η', 'η', 'eta', 'ἦτα', 'ē', 'ey as in obey', 'ay', 'obey'],
+    ['Θ', 'θ', 'theta', 'θῆτα', 'th', 'th as in thing', 'th', 'thing'],
+    ['Ι', 'ι', 'iota', 'ἰῶτα', 'i', 'i as in pit; long, as in machine', 'ih / ee', 'pit, machine'],
+    ['Κ', 'κ', 'kappa', 'κάππα', 'k', 'k as in kite', 'k', 'kite'],
+    ['Λ', 'λ', 'lambda', 'λάμβδα', 'l', 'l as in lamp', 'l', 'lamp'],
+    ['Μ', 'μ', 'mu', 'μῦ', 'm', 'm as in mother', 'm', 'mother'],
+    ['Ν', 'ν', 'nu', 'νῦ', 'n', 'n as in new', 'n', 'new'],
+    ['Ξ', 'ξ', 'xi', 'ξῖ', 'x', 'x as in axe', 'ks', 'axe'],
+    ['Ο', 'ο', 'omicron', 'ὂ μικρόν', 'o', 'o as in often', 'aw', 'often'],
+    ['Π', 'π', 'pi', 'πῖ', 'p', 'p as in pen', 'p', 'pen'],
+    ['Ρ', 'ρ', 'rho', 'ῥῶ', 'r', 'r as in run (lightly rolled)', 'r', 'run, rolled'],
+    ['Σ', 'σ ς', 'sigma', 'σίγμα', 's', 's as in sing', 's', 'sing'],
+    ['Τ', 'τ', 'tau', 'ταῦ', 't', 't as in top', 't', 'top'],
+    ['Υ', 'υ', 'upsilon', 'ὖ ψιλόν', 'y / u', 'like German ü (many say oo)', 'ü / oo', 'über'],
+    ['Φ', 'φ', 'phi', 'φῖ', 'ph', 'ph as in phone', 'f', 'phone'],
+    ['Χ', 'χ', 'chi', 'χῖ', 'ch', 'ch as in Bach (or simply k)', 'kh', 'Bach'],
+    ['Ψ', 'ψ', 'psi', 'ψῖ', 'ps', 'ps as in lips', 'ps', 'lips'],
+    ['Ω', 'ω', 'omega', 'ὦ μέγα', 'ō', 'o as in tone', 'oh', 'tone']
   ];
 
   C.greekNumerals = ['', 'αʹ', 'βʹ', 'γʹ', 'δʹ', 'εʹ', 'ϛʹ', 'ζʹ', 'ηʹ', 'θʹ', 'ιʹ'];

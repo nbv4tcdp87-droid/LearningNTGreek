@@ -237,6 +237,7 @@ textarea { min-height: 72px; resize: vertical; }
 .alpha .nm { font-weight: 600; font-size: .9rem; line-height: 1.25; }
 .alpha .tr { font-size: .8rem; color: var(--muted); line-height: 1.25; }
 .alpha .sd { font-size: .74rem; color: var(--muted); line-height: 1.25; }
+.alpha .tr .ph { color: var(--ink); font-weight: 700; }
 
 /* Read list */
 .readlist { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -610,9 +611,9 @@ const PARA_LIST = [
 const PARA_OPTS = { 'noun:logos': { art: 1 }, 'noun:ergon': { art: 1 }, 'nouns:arche,hemera,doxa': { art: 1 }, 'noun:prophetes': { art: 1 }, 'verb:luo': { gloss: 1 } };
 
 /* ================= Custom blocks ================= */
-function alphabetBlock() {
+function alphabetBlock(phonetic) {
   return '<div class="alpha">' + C.alphabet.map(a =>
-    '<div><span class="lt">' + esc(a[0]) + ' ' + esc(a[1]) + '</span><span class="nm">' + esc(a[2]) + ' <span class="muted">' + esc(a[3]) + '</span></span><span class="tr">' + esc(a[4]) + '</span><span class="sd">' + esc(a[5]) + '</span></div>').join('') + '</div>';
+    '<div><span class="lt">' + esc(a[0]) + ' ' + esc(a[1]) + '</span><span class="nm">' + esc(a[2]) + ' <span class="muted">' + esc(a[3]) + '</span></span><span class="tr">' + (phonetic ? 'say <b class="ph">' + esc(a[6]) + '</b>' : esc(a[4])) + '</span><span class="sd">' + esc(a[5]) + '</span></div>').join('') + '</div>';
 }
 function readlistBlock(el) {
   const items = el.dataset.items.split(';').map(s => s.split('|'));
@@ -831,7 +832,8 @@ function icon(name) {
     home: '<path d="M3 10.5 12 4l9 6.5V20h-6v-6H9v6H3z"/>',
     cards: '<rect x="4" y="6" width="13" height="14" rx="2"/><path d="M8 3h11a2 2 0 0 1 2 2v12"/>',
     review: '<path d="M4 12a8 8 0 1 0 2.4-5.7"/><path d="M4 4v4h4"/>',
-    table: '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M9 4v16"/>'
+    table: '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M9 4v16"/>',
+    alpha: '<path d="M18 6c-.8 6-3 12-7.5 12a4.5 4.5 0 0 1 0-9c3.5 0 5 6 8.5 9"/>'
   }[name];
   return '<span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + p + '</svg></span>';
 }
@@ -850,6 +852,7 @@ function renderRail() {
     '<div class="nav-group">' + link('home', 'home', 'Home') + '</div>' +
     '<div class="nav-group"><span class="eyebrow">Unit 1 · Lessons</span>' + lessons + '</div>' +
     '<div class="nav-group"><span class="eyebrow">Practice</span>' +
+    link('alphabet', 'alpha', 'Alphabet') +
     link('vocab', 'cards', 'Vocabulary', due ? '<span class="badge" title="Cards due">' + due + '</span>' : '<span></span>') +
     link('review', 'review', 'Grammar review') + link('tables', 'table', 'Paradigms') + '</div>' +
     '<div class="rail-foot" id="railFoot"></div>';
@@ -944,7 +947,7 @@ function vocabTable(words, showLesson) {
 /* ---------- Vocabulary view ---------- */
 const VOCAB_LESSONS = [4, 5, 6, 7, 8, 9, 10];
 const VOCAB_NAMES = { 4: 'Verbs', 5: 'Nouns I', 6: 'Nouns II', 7: '1st decl.', 8: 'Adjectives', 9: 'Prepositions', 10: 'Pronouns' };
-const ui = { vocabTab: 'cards', vocabSel: null, dir: 'gk', reviewTab: 'parse', parseSets: null, formSets: null, paraPick: 'verb:luo' };
+const ui = { vocabTab: 'cards', vocabSel: null, dir: 'gk', reviewTab: 'parse', parseSets: null, formSets: null, paraPick: 'verb:luo', alphaTab: 'match', alphaModes: ['names', 'sounds'] };
 try { const u = JSON.parse(localStorage.getItem(LS_KEY + '-ui') || 'null'); if (u) Object.assign(ui, u); } catch (e) { /* ignore */ }
 const saveUi = () => { try { localStorage.setItem(LS_KEY + '-ui', JSON.stringify(ui)); } catch (e) { /* ignore */ } };
 function defaultVocabSel() {
@@ -1111,7 +1114,8 @@ const parseText = (p, kind) => kind === 'pn' ? PER_LONG[p.p] + ' ' + N_LONG[p.n]
 
 function viewReview() {
   if (!ui.parseSets) ui.parseSets = defaultSets();
-  const tabs = [['parse', 'Parse it'], ['forms', 'Build the form'], ['recall', 'Paradigm recall'], ['mixed', 'Mixed lesson review'], ['alpha', 'Alphabet']];
+  const tabs = [['parse', 'Parse it'], ['forms', 'Build the form'], ['recall', 'Paradigm recall'], ['mixed', 'Mixed lesson review']];
+  if (!tabs.some(t => t[0] === ui.reviewTab)) ui.reviewTab = 'parse'; // the alphabet tab moved to its own page
   const html = '<div class="page">' +
     '<header class="l-head"><span class="eyebrow">Practice</span><h1>Grammar review</h1><p class="muted">Drills generated from the paradigms, plus a mixed review of lesson exercises. Pick what to practice; questions never run out.</p></header>' +
     '<div class="panel"><div class="tabs" role="tablist">' + tabs.map(t => '<button type="button" class="tab" role="tab" data-tab="' + t[0] + '" aria-selected="' + (ui.reviewTab === t[0]) + '">' + t[1] + '</button>').join('') + '</div><div id="rpane"></div></div></div>';
@@ -1123,7 +1127,7 @@ function viewReview() {
 function reviewPane() {
   const pane = $('#rpane'); if (!pane) return;
   activeKey = null;
-  ({ parse: parseDrill, forms: formsDrill, recall: recallPane, mixed: mixedReview, alpha: alphaDrill })[ui.reviewTab](pane);
+  ({ parse: parseDrill, forms: formsDrill, recall: recallPane, mixed: mixedReview })[ui.reviewTab](pane);
   greekify(pane);
 }
 function setPicker(key) {
@@ -1232,12 +1236,73 @@ function alphaDrill(pane) {
     const sm = x => x[1].split(' ')[0];
     if (t === 'name') return { t: 'mc', q: 'What is the name of <span class="big">' + sm(a) + '</span>?', o: [a[2]].concat(others.map(x => x[2])), a: 0, x: a[2] + ' is transliterated ' + a[4] + '.' };
     if (t === 'letter') return { t: 'mc', q: 'Which letter is <b>' + a[2] + '</b>?', o: [sm(a)].concat(others.map(sm)), a: 0 };
-    if (t === 'sound') return { t: 'mc', q: 'How is <span class="big">' + sm(a) + '</span> transliterated?', o: [a[4]].concat(others.filter(x => x[4] !== a[4]).map(x => x[4])).slice(0, 4), a: 0, x: 'Sound: ' + a[5] + '.' };
+    if (t === 'sound') return { t: 'mc', q: 'How is <span class="big">' + sm(a) + '</span> transliterated?', o: [a[4]].concat(others.filter(x => x[4] !== a[4]).map(x => x[4])).slice(0, 4), a: 0, x: 'Say it “' + a[6] + '”: ' + a[5] + '.' };
     return { t: 'mc', q: 'Which small letter matches the capital <span class="big">' + a[0] + '</span>?', o: [sm(a)].concat(others.map(sm)), a: 0 };
   };
   pane.innerHTML = '<p class="muted">Ten quick questions on letter names, shapes and sounds.</p><div id="ad" style="margin-top:12px"></div>';
   const make = () => Array.from({ length: 10 }, gen);
   runQuiz($('#ad', pane), make(), { reshuffle: make });
+}
+
+/* ---------- Alphabet practice view ---------- */
+const ALPHA_MODES = [['names', 'Names'], ['sounds', 'Sounds']];
+const ALPHA_PER_ROUND = 6;
+// One set covers all 24 letters for each chosen mode: four rounds of six, names and sounds interleaved.
+function alphaRounds(modes) {
+  const small = a => a[1].replace(' ', ' / ');
+  const kinds = {
+    names: { q: 'Match each letter to its name.', right: a => a[2] },
+    sounds: { q: 'Match each letter to its sound.', right: a => a[6] + ' (' + a[7] + ')' }
+  };
+  const perMode = modes.map(m => {
+    const s = shuffle(C.alphabet), rounds = [];
+    for (let i = 0; i < s.length; i += ALPHA_PER_ROUND) rounds.push({ t: 'match', q: kinds[m].q, pairs: s.slice(i, i + ALPHA_PER_ROUND).map(a => [small(a), kinds[m].right(a)]) });
+    return rounds;
+  });
+  const items = [];
+  perMode[0].forEach((_, i) => perMode.forEach(r => items.push(r[i])));
+  return items;
+}
+function viewAlphabet() {
+  const tabs = [['match', 'Matching'], ['quiz', 'Quick quiz'], ['chart', 'Chart']];
+  if (!tabs.some(t => t[0] === ui.alphaTab)) ui.alphaTab = 'match';
+  const html = '<div class="page">' +
+    '<header class="l-head"><span class="eyebrow">Practice</span><h1>Alphabet</h1><p class="muted">Match each letter to its name and to its sound. Sounds are spelled the way an English speaker would say them, using Erasmian pronunciation.</p></header>' +
+    '<div class="panel"><div class="tabs" role="tablist">' + tabs.map(t => '<button type="button" class="tab" role="tab" data-tab="' + t[0] + '" aria-selected="' + (ui.alphaTab === t[0]) + '">' + t[1] + '</button>').join('') + '</div><div id="apane"></div></div></div>';
+  return { html, after: root => {
+    $$('[data-tab]', root).forEach(t => t.addEventListener('click', () => { ui.alphaTab = t.dataset.tab; saveUi(); $$('[data-tab]', root).forEach(x => x.setAttribute('aria-selected', String(x === t))); alphaPane(); }));
+    alphaPane();
+  } };
+}
+function alphaPane() {
+  const pane = $('#apane'); if (!pane) return;
+  activeKey = null;
+  ({ match: alphaMatch, quiz: alphaDrill, chart: alphaChart })[ui.alphaTab](pane);
+  greekify(pane);
+}
+function alphaMatch(pane) {
+  ui.alphaModes = (ui.alphaModes || []).filter(m => ALPHA_MODES.some(x => x[0] === m));
+  if (!ui.alphaModes.length) ui.alphaModes = ['names', 'sounds'];
+  pane.innerHTML = '<div><span class="eyebrow">Match letters to</span><div class="setpick" data-modes style="margin-top:6px">' +
+    ALPHA_MODES.map(m => '<button type="button" class="chip" data-m="' + m[0] + '" aria-pressed="' + ui.alphaModes.includes(m[0]) + '">' + m[1] + '</button>').join('') + '</div></div>' +
+    '<p class="muted am-note" style="margin:10px 0 12px"></p><div id="am"></div>';
+  const start = () => {
+    const modes = ALPHA_MODES.map(m => m[0]).filter(m => ui.alphaModes.includes(m));
+    $('.am-note', pane).textContent = 'Each set covers all 24 letters, six at a time' + (modes.length > 1 ? ', once for names and once for sounds.' : '.') + ' Tap a letter, then its match.';
+    const make = () => alphaRounds(modes);
+    runQuiz($('#am', pane), make(), { reshuffle: make });
+  };
+  $('[data-modes]', pane).addEventListener('click', e => {
+    const b = e.target.closest('[data-m]'); if (!b) return;
+    const on = b.getAttribute('aria-pressed') !== 'true';
+    if (!on && ui.alphaModes.length === 1) return;
+    ui.alphaModes = on ? ui.alphaModes.concat(b.dataset.m) : ui.alphaModes.filter(x => x !== b.dataset.m);
+    b.setAttribute('aria-pressed', String(on)); saveUi(); start();
+  });
+  start();
+}
+function alphaChart(pane) {
+  pane.innerHTML = '<p class="muted">All 24 letters with their names and sounds. Say each one aloud before you match.</p>' + alphabetBlock(true);
 }
 
 /* ---------- Paradigms view ---------- */
@@ -1257,6 +1322,7 @@ function route(keepScroll) {
   let r = h, out;
   const m = h.match(/^lesson-(\d+)$/);
   if (m && C.lessons[+m[1] - 1]) out = viewLesson(+m[1]);
+  else if (h === 'alphabet') out = viewAlphabet();
   else if (h === 'vocab') out = viewVocab();
   else if (h === 'review') out = viewReview();
   else if (h === 'tables') out = viewTables();
@@ -1270,7 +1336,7 @@ function route(keepScroll) {
   greekify(main);
   wireReadlists(main);
   renderRail();
-  const titles = { home: 'En Archē Greek', vocab: 'Vocabulary · En Archē', review: 'Grammar review · En Archē', tables: 'Paradigms · En Archē' };
+  const titles = { home: 'En Archē Greek', alphabet: 'Alphabet · En Archē', vocab: 'Vocabulary · En Archē', review: 'Grammar review · En Archē', tables: 'Paradigms · En Archē' };
   document.title = m ? 'Lesson ' + m[1] + ': ' + C.lessons[+m[1] - 1].title + ' · En Archē' : (titles[r] || 'En Archē Greek');
   if (!keepScroll) window.scrollTo(0, 0);
 }

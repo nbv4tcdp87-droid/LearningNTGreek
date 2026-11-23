@@ -1244,19 +1244,54 @@ function mixedReview(pane) {
   pane.innerHTML = '<p class="muted">Ten questions drawn at random from ' + (studied.length ? 'the lessons you have opened (' + studied.map(l => l.n).join(', ') + ')' : 'Lessons 1–3; open more lessons to widen the pool') + '.</p><div id="mx" style="margin-top:12px"></div>';
   runQuiz($('#mx', pane), make(), { reshuffle: make });
 }
-function alphaDrill(pane) {
-  const A = C.alphabet;
-  const gen = () => {
-    const a = pick(A); const others = shuffle(A.filter(x => x !== a)).slice(0, 3);
-    const t = pick(['name', 'letter', 'sound', 'case']);
-    const sm = x => x[1].split(' ')[0];
-    if (t === 'name') return { t: 'mc', q: 'What is the name of <span class="big">' + sm(a) + '</span>?', o: [a[2]].concat(others.map(x => x[2])), a: 0, x: a[2] + ' is transliterated ' + a[4] + '.' };
-    if (t === 'letter') return { t: 'mc', q: 'Which letter is <b>' + a[2] + '</b>?', o: [sm(a)].concat(others.map(sm)), a: 0 };
-    if (t === 'sound') return { t: 'mc', q: 'How is <span class="big">' + sm(a) + '</span> transliterated?', o: [a[4]].concat(others.filter(x => x[4] !== a[4]).map(x => x[4])).slice(0, 4), a: 0, x: 'Say it “' + a[6] + '”: ' + a[5] + '.' };
-    return { t: 'mc', q: 'Which small letter matches the capital <span class="big">' + a[0] + '</span>?', o: [sm(a)].concat(others.map(sm)), a: 0 };
+/* Alphabet quick quiz: five fixed versions. Each version asks one question about every letter.
+   Letter i (alphabet order) gets question type (i + v) % 5 in version v, so across the five
+   versions every letter is asked in all five ways. Seeded randomness keeps each version stable. */
+const ALPHA_QUIZ_VERSIONS = 5;
+const ALPHA_TYPES = ['name', 'letter', 'translit', 'capital', 'sound'];
+// Letters a beginner is likely to confuse with each small letter; used first as wrong answers.
+const ALPHA_CONFUSE = {
+  'α': 'οδλ', 'β': 'δζθ', 'γ': 'υνκ', 'δ': 'θσζ', 'ε': 'σηζ', 'ζ': 'ξδε', 'η': 'νμι', 'θ': 'φοδ',
+  'ι': 'τλη', 'κ': 'χγξ', 'λ': 'χια', 'μ': 'νυη', 'ν': 'υμη', 'ξ': 'ζχψ', 'ο': 'ωσθ', 'π': 'ρτω',
+  'ρ': 'πφν', 'σ': 'οεδ', 'τ': 'πιγ', 'υ': 'νγμ', 'φ': 'ψθρ', 'χ': 'ξκλ', 'ψ': 'φωυ', 'ω': 'οψπ'
+};
+function seededRng(seed) { // mulberry32
+  return () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+}
+function alphaQuizVersion(v) {
+  const A = C.alphabet, rnd = seededRng(1009 + v * 7919);
+  const sshuffle = arr => { arr = arr.slice(); for (let i = arr.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [arr[i], arr[j]] = [arr[j], arr[i]]; } return arr; };
+  const sm = a => a[1].split(' ')[0];
+  const bySmall = {}; A.forEach(a => { bySmall[sm(a)] = a; });
+  const wrong = a => { // two look-alikes, then one other letter
+    const look = sshuffle([...ALPHA_CONFUSE[sm(a)]].map(c => bySmall[c])).slice(0, 2);
+    const rest = sshuffle(A.filter(x => x !== a && !look.includes(x)));
+    return look.concat([rest[0]]); // wrapped: concat would spread the tuple itself
   };
-  pane.innerHTML = '<p class="muted">Ten quick questions on letter names, shapes and sounds.</p><div id="ad" style="margin-top:12px"></div>';
-  const make = () => Array.from({ length: 10 }, gen);
+  const make = (a, type) => {
+    const o3 = wrong(a);
+    if (type === 'name') return { t: 'mc', q: 'What is the name of <span class="big">' + sm(a) + '</span>?', o: [a[2]].concat(o3.map(x => x[2])), a: 0, x: sm(a) + ' is ' + a[2] + ' (' + a[3] + '), transliterated ' + a[4] + '.' };
+    if (type === 'letter') return { t: 'mc', q: 'Which letter is <b>' + a[2] + '</b>?', o: [sm(a)].concat(o3.map(sm)), a: 0, x: a[2] + ': capital ' + a[0] + ', small ' + a[1].replace(' ', ' or ') + '.' };
+    if (type === 'translit') return { t: 'mc', q: 'How is <span class="big">' + sm(a) + '</span> transliterated?', o: [a[4]].concat(o3.map(x => x[4])), a: 0, x: 'Say it “' + a[6] + '”: ' + a[5] + '.' };
+    if (type === 'capital') return { t: 'mc', q: 'Which small letter matches the capital <span class="big">' + a[0] + '</span>?', o: [sm(a)].concat(o3.map(sm)), a: 0, x: a[0] + ' and ' + a[1].replace(' ', ' or ') + ' are ' + a[2] + '.' };
+    return { t: 'mc', q: 'What sound does <span class="big">' + sm(a) + '</span> make?', o: [a[6] + ' (' + a[7] + ')'].concat(o3.map(x => x[6] + ' (' + x[7] + ')')), a: 0, x: a[2] + ': ' + a[5] + '.' };
+  };
+  return sshuffle(A.map((a, i) => make(a, ALPHA_TYPES[(i + v) % ALPHA_TYPES.length])));
+}
+// One version per page load: advance from the last one this browser saw (random start if none is stored).
+let alphaQuizThisLoad = null;
+function alphaQuizPick() {
+  if (alphaQuizThisLoad === null) {
+    const last = ui.alphaQuizLast;
+    alphaQuizThisLoad = Number.isInteger(last) ? (last + 1) % ALPHA_QUIZ_VERSIONS : Math.floor(Math.random() * ALPHA_QUIZ_VERSIONS);
+    ui.alphaQuizLast = alphaQuizThisLoad; saveUi();
+  }
+  return alphaQuizThisLoad;
+}
+function alphaDrill(pane) {
+  const v = alphaQuizPick();
+  pane.innerHTML = '<p class="muted">Version ' + (v + 1) + ' of ' + ALPHA_QUIZ_VERSIONS + ': one question on each of the 24 letters, covering names, shapes, transliteration and sounds. A different version loads each time you open the site.</p><div id="ad" style="margin-top:12px"></div>';
+  const make = () => alphaQuizVersion(v);
   runQuiz($('#ad', pane), make(), { reshuffle: make });
 }
 

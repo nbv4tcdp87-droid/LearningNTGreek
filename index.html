@@ -518,13 +518,14 @@ function withEnd(form, len) {
   return esc(core.slice(0, i)) + '<span class="end">' + esc(core.slice(i)) + (paren ? '(ν)' : '') + '</span>';
 }
 function cell(f, gl) { return '<td><span class="f">' + f + '</span>' + (gl ? '<span class="gl">' + esc(gl) + '</span>' : '') + '</td>'; }
+const verbEnds = v => v.cv ? P.cEndings[v.cv] : P.verbEndings;
 function verbTable(v, gloss) {
   const subj = [['I', 'you', 'he/she/it'], ['we', 'you (pl.)', 'they']];
   let rows = '';
   for (let p = 0; p < 3; p++) {
     rows += '<tr><th scope="row">' + PN[0][p] + '</th>';
     for (let n = 0; n < 2; n++) {
-      const e = P.verbEndings[n * 3 + p];
+      const e = verbEnds(v)[n * 3 + p];
       const f = esc(v.stem) + '<span class="end">' + esc(e) + '</span>';
       const g = gloss ? subj[n][p] + ' ' + (n === 0 && p === 2 ? v.en3 : v.en) : '';
       rows += cell(f, g);
@@ -532,6 +533,19 @@ function verbTable(v, gloss) {
     rows += '</tr>';
   }
   return '<div class="para"><div class="para-title">Present active indicative of <b>' + esc(v.lemma) + '</b>, “I ' + esc(v.en) + '”</div><div class="tbl-wrap"><table class="tbl"><thead><tr><th></th><th>Singular</th><th>Plural</th></tr></thead><tbody>' + rows + '</tbody></table></div></div>';
+}
+// Contract verbs side by side; with steps, each cell also shows the vowels that merged (ε + ομεν)
+function cverbsTable(keys, steps) {
+  const vs = keys.map(k => P.cverbs[k]);
+  let rows = '';
+  [0, 1].forEach(n => {
+    rows += '<tr class="grp"><th colspan="' + (vs.length + 1) + '">' + PN[1][n] + '</th></tr>';
+    for (let p = 0; p < 3; p++) {
+      const i = n * 3 + p;
+      rows += '<tr><th scope="row">' + PN[0][p] + '</th>' + vs.map(v => cell(esc(v.stem) + '<span class="end">' + esc(P.cEndings[v.cv][i]) + '</span>', steps ? v.cv + ' + ' + P.verbEndings[i].replace('(ν)', '') : '')).join('') + '</tr>';
+    }
+  });
+  return '<div class="para"><div class="para-title">Present active indicative of contract verbs</div><div class="tbl-wrap"><table class="tbl"><thead><tr><th></th>' + vs.map(v => '<th>' + esc(v.lemma) + ' · ' + esc(v.en) + '</th>').join('') + '</tr></thead><tbody>' + rows + '</tbody></table></div></div>';
 }
 function eimiTable() {
   let rows = '';
@@ -597,6 +611,8 @@ function renderPara(spec, opts) {
   opts = opts || {};
   const [kind, arg] = spec.split(':');
   if (kind === 'verb') return verbTable(P.verbs[arg], opts.gloss);
+  if (kind === 'cverb') return verbTable(P.cverbs[arg], opts.gloss);
+  if (kind === 'cverbs') return cverbsTable(arg.split(','), opts.gloss);
   if (kind === 'eimi') return eimiTable();
   if (kind === 'noun') return nounTable(arg, opts.art, opts.gloss);
   if (kind === 'nouns') return nounsTable(arg.split(','), opts.art);
@@ -607,7 +623,7 @@ function renderPara(spec, opts) {
   return '';
 }
 const PARA_LIST = [
-  ['Verbs', [['verb:luo', 'λύω, present active'], ['eimi', 'εἰμί, present']]],
+  ['Verbs', [['verb:luo', 'λύω, present active'], ['cverbs:poieo,agapao,pleroo', 'ποιέω · ἀγαπάω · πληρόω (contract verbs)'], ['eimi', 'εἰμί, present']]],
   ['The article', [['article', 'ὁ, ἡ, τό']]],
   ['Nouns', [['noun:logos', 'λόγος (2nd decl. masc.)'], ['noun:ergon', 'ἔργον (2nd decl. neut.)'], ['nouns:arche,hemera,doxa', 'ἀρχή · ἡμέρα · δόξα (1st decl. fem.)'], ['noun:prophetes', 'προφήτης (1st decl. masc.)'],
     ['nouns:sarx,elpis', 'σάρξ · ἐλπίς (3rd decl. fem.)'], ['noun:onoma', 'ὄνομα (3rd decl. neut.)'], ['nouns:pater,aner,gyne', 'πατήρ · ἀνήρ · γυνή (3rd decl.)']]],
@@ -615,7 +631,7 @@ const PARA_LIST = [
   ['Pronouns', [['pron:ego-su', 'ἐγώ and σύ'], ['pron:autos', 'αὐτός, -ή, -ό']]]
 ];
 const PARA_OPTS = { 'noun:logos': { art: 1 }, 'noun:ergon': { art: 1 }, 'nouns:arche,hemera,doxa': { art: 1 }, 'noun:prophetes': { art: 1 }, 'verb:luo': { gloss: 1 },
-  'nouns:sarx,elpis': { art: 1 }, 'noun:onoma': { art: 1 }, 'nouns:pater,aner,gyne': { art: 1 } };
+  'nouns:sarx,elpis': { art: 1 }, 'noun:onoma': { art: 1 }, 'nouns:pater,aner,gyne': { art: 1 }, 'cverbs:poieo,agapao,pleroo': { gloss: 1 } };
 
 /* ================= Custom blocks ================= */
 function alphabetBlock(phonetic) {
@@ -916,7 +932,7 @@ function viewHome() {
       '<div><h3>2 · Learn the words</h3><p>Each lesson from 4 onward adds 8 to 16 high-frequency words. Short daily flashcard sessions space out your reviews so words stick.</p></div>' +
       '<div><h3>3 · Drill the forms</h3><p>Grammar review generates endless parsing and form-building questions from the paradigms you have learned, plus mixed review of past lessons.</p></div>' +
     '</div></section>' +
-    '<section><div class="sec-head"><span class="eyebrow">Coming in Unit 2</span><h2>The road ahead</h2></div><div class="ahead"><span>Contract verbs</span><span>Imperfect &amp; future</span><span>Middle &amp; passive voice</span><span>Aorist</span><span>Demonstratives &amp; relatives</span><span>Participles</span><span>Infinitives &amp; subjunctive</span></div></section>' +
+    '<section><div class="sec-head"><span class="eyebrow">Coming in Unit 2</span><h2>The road ahead</h2></div><div class="ahead"><span>Imperfect &amp; future</span><span>Middle &amp; passive voice</span><span>Aorist</span><span>Demonstratives &amp; relatives</span><span>Participles</span><span>Infinitives &amp; subjunctive</span></div></section>' +
   '</div>';
 }
 
@@ -960,8 +976,8 @@ function vocabTable(words, showLesson) {
 }
 
 /* ---------- Vocabulary view ---------- */
-const VOCAB_LESSONS = [4, 5, 6, 7, 8, 9, 10, 11];
-const VOCAB_NAMES = { 4: 'Verbs', 5: 'Nouns I', 6: 'Nouns II', 7: '1st decl.', 8: 'Adjectives', 9: 'Prepositions', 10: 'Pronouns', 11: '3rd decl.' };
+const VOCAB_LESSONS = [4, 5, 6, 7, 8, 9, 10, 11, 12];
+const VOCAB_NAMES = { 4: 'Verbs', 5: 'Nouns I', 6: 'Nouns II', 7: '1st decl.', 8: 'Adjectives', 9: 'Prepositions', 10: 'Pronouns', 11: '3rd decl.', 12: 'Contract verbs' };
 const ui = { vocabTab: 'cards', vocabSel: null, dir: 'gk', reviewTab: 'parse', parseSets: null, formSets: null, paraPick: 'verb:luo', alphaTab: 'match', alphaModes: ['names', 'sounds'] };
 try { const u = JSON.parse(localStorage.getItem(LS_KEY + '-ui') || 'null'); if (u) Object.assign(ui, u); } catch (e) { /* ignore */ }
 const saveUi = () => { try { localStorage.setItem(LS_KEY + '-ui', JSON.stringify(ui)); } catch (e) { /* ignore */ } };
@@ -1086,7 +1102,8 @@ function wordList(pane, words) {
 /* ---------- Grammar review ---------- */
 const SETS = [
   ['verbs', 'Present verbs', 4], ['eimi', 'εἰμί', 10], ['article', 'Article', 7], ['n2', '2nd declension', 6],
-  ['n1', '1st declension', 7], ['adj', 'Adjectives', 8], ['pron', 'Pronouns', 10], ['n3', '3rd declension', 11]
+  ['n1', '1st declension', 7], ['adj', 'Adjectives', 8], ['pron', 'Pronouns', 10], ['n3', '3rd declension', 11],
+  ['cverbs', 'Contract verbs', 12]
 ];
 const CASES = ['nom', 'gen', 'dat', 'acc'], CASE_LONG = { nom: 'nominative', gen: 'genitive', dat: 'dative', acc: 'accusative' };
 const G_LONG = { m: 'masculine', f: 'feminine', n: 'neuter' }, N_LONG = { sg: 'singular', pl: 'plural' }, PER_LONG = { 1: '1st person', 2: '2nd person', 3: '3rd person' };
@@ -1102,6 +1119,11 @@ function buildPool(sets) {
   if (sets.includes('verbs')) Object.values(P.verbs).forEach(v => {
     const e = [];
     P.verbEndings.forEach((end, i) => e.push([v.stem + end.replace('(ν)', 'ν'), { p: (i % 3) + 1, n: i < 3 ? 'sg' : 'pl' }]));
+    group(v.lemma, v.en, 'pn', e);
+  });
+  if (sets.includes('cverbs')) Object.values(P.cverbs).forEach(v => {
+    const e = [];
+    P.cEndings[v.cv].forEach((end, i) => e.push([v.stem + end.replace('(ν)', 'ν'), { p: (i % 3) + 1, n: i < 3 ? 'sg' : 'pl' }]));
     group(v.lemma, v.en, 'pn', e);
   });
   if (sets.includes('eimi')) {

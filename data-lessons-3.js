@@ -120,4 +120,110 @@ window.COURSE = window.COURSE || {};
     ]
   });
 
+  /* ============ LESSON 12 ============ */
+  L.push({
+    n: 12, title: 'Contract Verbs', gk: 'ποιῶ, ἀγαπῶ, πληρῶ',
+    blurb: 'Verbs like ποιέω, ἀγαπάω and πληρόω: the stem vowel merges with the ending, and a circumflex marks the spot.',
+    goals: [
+      'Recognize verbs whose stem ends in ε, α or ο',
+      'Form the present of ποιέω, ἀγαπάω and πληρόω',
+      'Read a circumflex on the ending as a sign of contraction',
+      'Work back from a contracted form to the dictionary form'
+    ],
+    sections: [
+      { h: 'Verbs whose stem ends in a vowel', html: `
+        <p>The verbs in Lesson 4 have stems that end in a consonant (λεγ-, ἐχ-, βλεπ-) or in υ (λυ-, πιστευ-). Three large groups of verbs have stems that end in a short vowel:</p>
+        <ul>
+          <li><b>ε-verbs</b> like ποιέω, “I do, make”</li>
+          <li><b>α-verbs</b> like ἀγαπάω, “I love”</li>
+          <li><b>ο-verbs</b> like πληρόω, “I fill, fulfill”</li>
+        </ul>
+        <p>When the stem vowel meets the vowel at the start of the ending, the two merge into one sound. This is called <b>contraction</b>, and these are <b>contract verbs</b>. The endings are the ones you already know: -ω, -εις, -ει, -ομεν, -ετε, -ουσι(ν). Only the point where stem and ending meet changes.</p>
+        <div class="example"><p class="gk-line">ποιέ + ω → ποιῶ</p><p class="gk-line">ἀγαπά + ομεν → ἀγαπῶμεν</p><p>Dictionaries list contract verbs in the uncontracted form, ποιέω, so you can see the stem vowel. In a text you will almost always find the contracted form, ποιῶ.</p></div>
+        <aside class="callout latin"><b>Latin parallel.</b> Latin contracted too. <em>amō</em> comes from an older <em>amā-ō</em>: the stem vowel merged into the ending, just as ἀγαπάω becomes ἀγαπῶ. The other forms keep it: <em>amās, amat, amāmus</em>.</aside>` },
+      { h: 'ε-verbs: ποιέω', html: `
+        <p>The ε-verbs are the largest group. Here is ποιέω, “I do, make,” in full. The highlighted letters are the stem vowel and the ending, merged.</p>
+        <div data-para="cverb:poieo" data-gloss="1"></div>
+        <p>The ε meets the endings in three ways:</p>
+        <div class="tbl-wrap"><table class="tbl">
+          <thead><tr><th>Meeting</th><th>Result</th><th>Example</th></tr></thead>
+          <tbody>
+            <tr><td>ε + ε</td><td>ει</td><td>ποιέ-ετε → ποιεῖτε</td></tr>
+            <tr><td>ε + ο</td><td>ου</td><td>ποιέ-ομεν → ποιοῦμεν</td></tr>
+            <tr><td>ε + a long vowel or diphthong</td><td>ε disappears</td><td>ποιέ-ω → ποιῶ; ποιέ-ει → ποιεῖ; ποιέ-ουσι → ποιοῦσι(ν)</td></tr>
+          </tbody>
+        </table></div>
+        <p>Watch the accent. In the uncontracted form it sits on the stem vowel: ποιέω, ποιέομεν. When an accented vowel merges with the next vowel, the new syllable takes a circumflex: ποιῶ, ποιοῦμεν. So a circumflex on the ending of a present-tense verb is the quickest sign of a contract verb. Compare λέγει, “he says,” with λαλεῖ, “he speaks”: only λαλεῖ is contracted.</p>` },
+      { h: 'α-verbs: ἀγαπάω', html: `
+        <p>With α, the result depends on the vowel that follows:</p>
+        <ul>
+          <li><b>α + an o-sound (ο, ω, ου) gives ω:</b> ἀγαπῶ, ἀγαπῶμεν, ἀγαπῶσι(ν).</li>
+          <li><b>α + ε gives α:</b> ἀγαπᾶτε.</li>
+          <li><b>α + ει gives ᾳ:</b> the ι survives as an iota subscript: ἀγαπᾷς, ἀγαπᾷ.</li>
+        </ul>
+        <div data-para="cverb:agapao" data-gloss="1"></div>
+        <p>One common verb breaks the pattern. ζάω, “I live,” contracts to η where you would expect α: ζῶ, ζῇς, ζῇ, ζῶμεν, ζῆτε, ζῶσι(ν).</p>` },
+      { h: 'ο-verbs: πληρόω', html: `
+        <ul>
+          <li><b>ο + ω gives ω:</b> πληρῶ.</li>
+          <li><b>ο + ε, ο or ου gives ου:</b> πληροῦτε, πληροῦμεν, πληροῦσι(ν).</li>
+          <li><b>ο + ει gives οι:</b> πληροῖς, πληροῖ.</li>
+        </ul>
+        <div data-para="cverb:pleroo" data-gloss="1"></div>
+        <p>The ο-verbs are the smallest group, but they include πληρόω, which Matthew uses again and again for Scripture being fulfilled, and σταυρόω, “I crucify.” Many are built from adjectives or nouns: φανερός, “visible,” gives φανερόω, “I make visible, reveal.”</p>` },
+      { h: 'All three side by side', html: `
+        <p>Here are the three groups together. Under each form you can see which vowels merged.</p>
+        <div data-para="cverbs:poieo,agapao,pleroo" data-gloss="1"></div>
+        <p>Three patterns help you remember them:</p>
+        <ul>
+          <li><b>The first person singular is the same in all three:</b> ποιῶ, ἀγαπῶ, πληρῶ.</li>
+          <li><b>o-sounds win.</b> If either vowel is ο or ω, the result is ω or ου, unless an ι has to be kept.</li>
+          <li><b>An ι is never lost.</b> It stays as a subscript (ᾳ) or in a diphthong (ει, οι).</li>
+        </ul>` },
+      { h: 'Looking up a contract verb', html: `
+        <p>To find a contract verb in the dictionary, work backward. Take off the ending and decide which vowel was lost:</p>
+        <ul>
+          <li><b>-εῖς, -εῖ, -εῖτε</b> can only come from an ε-verb.</li>
+          <li><b>-ᾷς, -ᾷ, -ᾶτε, -ῶμεν, -ῶσι(ν)</b> can only come from an α-verb.</li>
+          <li><b>-οῖς, -οῖ, -οῦτε</b> can only come from an ο-verb.</li>
+          <li><b>-οῦμεν and -οῦσι(ν)</b> could be ε or ο, and <b>-ῶ</b> could be any of the three. Here your vocabulary decides: ποιοῦμεν is from ποιέω, πληροῦμεν from πληρόω.</li>
+        </ul>
+        <p>This is why vocabulary lists give contract verbs uncontracted. ἀγαπάω tells you the stem vowel; ἀγαπῶ would not. Learn each one with its vowel.</p>` }
+    ],
+    texts: [
+      { ref: 'Ps 145:8', alt: '(146:8)', src: 'LXX', w: [['κύριος', 'the Lord'], ['σοφοῖ', 'makes wise'], ['τυφλούς,', 'the blind (acc. pl.)'], ['κύριος', 'the Lord'], ['ἀνορθοῖ', 'sets upright'], ['κατερραγμένους,', 'those who are broken down'], ['κύριος', 'the Lord'], ['ἀγαπᾷ', 'loves'], ['δικαίους·', 'the righteous (acc. pl.)']],
+        en: 'The Lord makes the blind wise, the Lord sets upright those who are broken down, the Lord loves the righteous.',
+        notes: ['σοφοῖ and ἀνορθοῖ are ο-verbs: σοφόω, “make wise,” from σοφός, “wise,” and ἀνορθόω, “set upright,” from ὀρθός, “straight.” ο + ει gives οι.', 'ἀγαπᾷ is an α-verb: α + ει gives ᾳ.', 'τυφλούς and δικαίους are adjectives used as nouns (Lesson 8): “blind people,” “righteous people.”', 'κατερραγμένους, “broken down,” is a participle. Participles come later in this unit.', 'The Hebrew says the Lord “opens the eyes of the blind.” The Septuagint reads “makes the blind wise.”'] },
+      { ref: 'John 3:35', src: 'NT', w: [['ὁ', 'the'], ['πατὴρ', 'Father'], ['ἀγαπᾷ', 'loves'], ['τὸν', 'the'], ['υἱόν,', 'Son'], ['καὶ', 'and'], ['πάντα', 'all things'], ['δέδωκεν', 'has given'], ['ἐν', 'into'], ['τῇ', 'the'], ['χειρὶ', 'hand (dat. sg.)'], ['αὐτοῦ.', 'his']],
+        en: 'The Father loves the Son and has given all things into his hand.',
+        notes: ['ἀγαπᾷ: α + ει gives ᾳ, “he loves.”', 'χειρί is the dative of χείρ, χειρός, ἡ, “hand,” a third-declension noun (Lesson 11).', 'δέδωκεν, “has given,” is a perfect tense of δίδωμι, “I give.”', 'John 5:20 says the same thing with the other verb for love: ὁ γὰρ πατὴρ φιλεῖ τὸν υἱόν. In John the two verbs overlap a great deal.'] },
+      { ref: 'Luke 6:46', src: 'NT', w: [['Τί', 'why?'], ['δέ', 'and, but'], ['με', 'me'], ['καλεῖτε·', 'do you call'], ['Κύριε', 'Lord (vocative)'], ['κύριε,', 'Lord'], ['καὶ', 'and'], ['οὐ', 'not'], ['ποιεῖτε', 'do'], ['ἃ', 'what, the things that'], ['λέγω;', 'I say']],
+        en: 'Why do you call me “Lord, Lord,” and not do what I say?',
+        notes: ['καλεῖτε and ποιεῖτε are 2nd person plural ε-verbs: ε + ε gives ει.', 'Κύριε is the vocative of κύριος, the form for speaking to someone (Lesson 11).', 'τί usually means “what?” Here it means “why?”', 'Calling Jesus “Lord” is not enough. A disciple does what the Lord says.'] },
+      { ref: 'John 21:15', src: 'NT', w: [['Σίμων', 'Simon'], ['Ἰωάννου,', 'son of John'], ['ἀγαπᾷς', 'do you love'], ['με', 'me'], ['πλέον', 'more'], ['τούτων;', 'than these'], ['λέγει', 'he says'], ['αὐτῷ·', 'to him'], ['Ναί,', 'yes'], ['κύριε,', 'Lord'], ['σὺ', 'you'], ['οἶδας', 'know'], ['ὅτι', 'that'], ['φιλῶ', 'I love'], ['σε.', 'you']],
+        en: '“Simon, son of John, do you love me more than these?” He says to him, “Yes, Lord, you know that I love you.”',
+        notes: ['ἀγαπᾷς is from ἀγαπάω (α + εις gives ᾷς). φιλῶ is from φιλέω (ε + ω gives ω).', 'Both verbs mean “love.” Some readers see a contrast between them here. John 3:35 and 5:20, which use each verb for the Father’s love of the Son, suggest they mean much the same.', 'Ἰωάννου is genitive: “Simon, son of John.”', 'Jesus asks three times, and Peter, who had denied him three times, answers three times. Each time Jesus entrusts his flock to Peter: “Feed my lambs,” “Tend my sheep,” “Feed my sheep” (Catechism 553).'] },
+      { ref: '1 John 4:19', src: 'NT', w: [['ἡμεῖς', 'we'], ['ἀγαπῶμεν,', 'love'], ['ὅτι', 'because'], ['αὐτὸς', 'he'], ['πρῶτος', 'first'], ['ἠγάπησεν', 'loved'], ['ἡμᾶς.', 'us']],
+        en: 'We love, because he first loved us.',
+        notes: ['ἀγαπῶμεν: α + ομεν gives ῶμεν. Only α-verbs end in -ῶμεν.', 'ἡμεῖς and αὐτός are emphatic (Lesson 10): we love because he loved first.', 'ἠγάπησεν, “he loved,” is the aorist of the same verb. The aorist comes later in this unit.', 'Three verses earlier, 1 John 4:16 says ὁ θεὸς ἀγάπη ἐστίν, “God is love.” Benedict XVI’s first encyclical, <em>Deus caritas est</em>, takes its title from that verse.'] }
+    ],
+    ex: [
+      { t: 'mc', q: 'Why is <span class="big">ποιέω</span> called a contract verb?', o: ['Its stem vowel ε merges with the vowel of each ending', 'It has no personal endings', 'Its stem ends in a consonant', 'It is used only in the plural'], a: 0 },
+      { t: 'mc', q: 'What does ε + ο become?', o: ['ου', 'ει', 'ω', 'ο'], a: 0, x: 'ποιέομεν becomes ποιοῦμεν.' },
+      { t: 'mc', q: 'What does α + ε become?', o: ['α', 'η', 'ει', 'ω'], a: 0, x: 'ἀγαπάετε becomes ἀγαπᾶτε.' },
+      { t: 'mc', q: 'Parse <span class="big">ποιοῦσιν</span>.', o: ['3rd person plural', '1st person plural', '3rd person singular', '2nd person plural'], a: 0, x: 'ε + ουσι gives οῦσι: “they do.”' },
+      { t: 'mc', q: 'Parse <span class="big">ἀγαπᾷ</span>.', o: ['3rd person singular', '2nd person singular', '1st person singular', '2nd person plural'], a: 0, x: 'α + ει gives ᾳ: the ι of the ending survives as a subscript. The 2nd person singular is ἀγαπᾷς.' },
+      { t: 'mc', q: 'Parse <span class="big">λαλεῖτε</span>.', o: ['2nd person plural', '3rd person singular', '1st person plural', '3rd person plural'], a: 0, x: 'ε + ετε gives εῖτε: “you (pl.) speak.”' },
+      { t: 'mc', q: 'What is the 2nd person plural of <span class="big">ἀγαπάω</span>?', o: ['ἀγαπᾶτε', 'ἀγαπεῖτε', 'ἀγαποῦτε', 'ἀγαπῶτε'], a: 0, x: 'α + ε gives α.' },
+      { t: 'mc', q: 'What is the 3rd person singular of <span class="big">πληρόω</span>?', o: ['πληροῖ', 'πληρεῖ', 'πληρᾷ', 'πληροῦσι(ν)'], a: 0, x: 'ο + ει gives οι. πληροῦσι(ν) is the 3rd person plural.' },
+      { t: 'mc', q: 'You meet <span class="big">ἀγαπῶμεν</span> in a text. Which form do you look up?', o: ['ἀγαπάω', 'ἀγαπέω', 'ἀγαπόω', 'ἀγαπῶμαι'], a: 0, x: 'Only α-verbs end in -ῶμεν. ε- and ο-verbs give -οῦμεν.' },
+      { t: 'mc', q: 'The ending <span class="big">-οῦμεν</span> could come from…', o: ['an ε-verb or an ο-verb', 'an α-verb only', 'an ε-verb only', 'any of the three'], a: 0, x: 'ποιοῦμεν (ε + ο) and πληροῦμεν (ο + ο) look alike. α + ο gives ω: ἀγαπῶμεν.' },
+      { t: 'mc', q: 'Which form is <b>not</b> from a contract verb?', o: ['λέγει', 'λαλεῖ', 'ποιεῖ', 'καλεῖ'], a: 0, x: 'λέγω has the consonant stem λεγ-, so its accent stays on the stem. The circumflex on λαλεῖ, ποιεῖ and καλεῖ marks a contraction.' },
+      { t: 'mc', q: 'Translate <span class="big">Τί ζητεῖτε;</span>', o: ['What are you looking for?', 'What is he looking for?', 'What are we looking for?', 'Who is looking for you?'], a: 0, x: 'ζητεῖτε is the 2nd person plural of ζητέω. These are Jesus’ first words in the Gospel of John (1:38).' },
+      { t: 'match', q: 'Match each verb to its meaning.', pairs: [['ποιέω', 'I do, make'], ['λαλέω', 'I speak'], ['ζητέω', 'I seek'], ['τηρέω', 'I keep'], ['πληρόω', 'I fill, fulfill'], ['ἀγαπάω', 'I love']] },
+      { t: 'self', q: 'Translate:', gk: 'οἱ μαθηταὶ ἀκολουθοῦσι τῷ κυρίῳ καὶ τηροῦσι τοὺς λόγους αὐτοῦ.', a: 'The disciples follow the Lord and keep his words.', x: 'ἀκολουθέω takes its object in the dative: τῷ κυρίῳ. Both verbs are 3rd person plural ε-verbs.' },
+      { t: 'self', q: 'Translate:', gk: 'ὁ κύριος καλεῖ τὰ τέκνα αὐτοῦ καὶ λαλεῖ αὐτοῖς.', a: 'The Lord calls his children and speaks to them.', x: 'καλεῖ and λαλεῖ are 3rd person singular ε-verbs. αὐτοῖς is dative: “to them.”' }
+    ]
+  });
+
 })(window.COURSE);

@@ -64,6 +64,28 @@ window.COURSE = window.COURSE || {};
     pempo: { lemma: 'πέμπω', stem: 'πέμπ', en: 'send', en3: 'sends', L: 4 }
   };
 
+  // Contract verbs (Lesson 12): unaccented stem (minus the contract vowel) + contracted endings.
+  // The contracted syllable always carries the accent (a circumflex) in the present active indicative.
+  // cv is the contract vowel: 'ε', 'α' or 'ο'.
+  P.cEndings = {
+    'ε': ['ῶ', 'εῖς', 'εῖ', 'οῦμεν', 'εῖτε', 'οῦσι(ν)'],
+    'α': ['ῶ', 'ᾷς', 'ᾷ', 'ῶμεν', 'ᾶτε', 'ῶσι(ν)'],
+    'ο': ['ῶ', 'οῖς', 'οῖ', 'οῦμεν', 'οῦτε', 'οῦσι(ν)']
+  };
+  P.cverbs = {
+    poieo: { lemma: 'ποιέω', stem: 'ποι', cv: 'ε', en: 'do', en3: 'does', L: 12 },
+    laleo: { lemma: 'λαλέω', stem: 'λαλ', cv: 'ε', en: 'speak', en3: 'speaks', L: 12 },
+    kaleo: { lemma: 'καλέω', stem: 'καλ', cv: 'ε', en: 'call', en3: 'calls', L: 12 },
+    zeteo: { lemma: 'ζητέω', stem: 'ζητ', cv: 'ε', en: 'seek', en3: 'seeks', L: 12 },
+    tereo: { lemma: 'τηρέω', stem: 'τηρ', cv: 'ε', en: 'keep', en3: 'keeps', L: 12 },
+    phileo: { lemma: 'φιλέω', stem: 'φιλ', cv: 'ε', en: 'love', en3: 'loves', L: 12 },
+    agapao: { lemma: 'ἀγαπάω', stem: 'ἀγαπ', cv: 'α', en: 'love', en3: 'loves', L: 12 },
+    gennao: { lemma: 'γεννάω', stem: 'γενν', cv: 'α', en: 'beget', en3: 'begets', L: 12 },
+    pleroo: { lemma: 'πληρόω', stem: 'πληρ', cv: 'ο', en: 'fill', en3: 'fills', L: 12 },
+    phaneroo: { lemma: 'φανερόω', stem: 'φανερ', cv: 'ο', en: 'reveal', en3: 'reveals', L: 12 },
+    stauroo: { lemma: 'σταυρόω', stem: 'σταυρ', cv: 'ο', en: 'crucify', en3: 'crucifies', L: 12 }
+  };
+
   P.eimi = { lemma: 'εἰμί', sg: ['εἰμί', 'εἶ', 'ἐστί(ν)'], pl: ['ἐσμέν', 'ἐστέ', 'εἰσί(ν)'],
     en: [['I am', 'you are', 'he/she/it is'], ['we are', 'you (pl.) are', 'they are']], L: 10 };
 
@@ -329,7 +351,24 @@ window.COURSE = window.COURSE || {};
     { g: 'μήτηρ', d: 'μητρός, ἡ', en: 'mother', f: 83, L: 11, pos: 'noun', n: 'declines like πατήρ; Latin mater' },
     { g: 'φῶς', d: 'φωτός, τό', en: 'light', f: 73, L: 11, pos: 'noun', n: 'photograph' },
     { g: 'ῥῆμα', d: '-ατος, τό', en: 'word, saying; thing, matter', f: 68, L: 11, pos: 'noun', n: 'same root as rhetoric' },
-    { g: 'ἐλπίς', d: '-ίδος, ἡ', en: 'hope', f: 53, L: 11, pos: 'noun' }
+    { g: 'ἐλπίς', d: '-ίδος, ἡ', en: 'hope', f: 53, L: 11, pos: 'noun' },
+    // Lesson 12 — contract verbs
+    { g: 'ποιέω', d: 'ποιῶ', en: 'I do, make', f: 568, L: 12, pos: 'verb', n: 'poem, poet (a “maker”)' },
+    { g: 'λαλέω', d: 'λαλῶ', en: 'I speak, say', f: 296, L: 12, pos: 'verb', n: 'glossolalia' },
+    { g: 'καλέω', d: 'καλῶ', en: 'I call, name, invite', f: 148, L: 12, pos: 'verb', n: 'related to ἐκκλησία, those “called out”' },
+    { g: 'ἀγαπάω', d: 'ἀγαπῶ', en: 'I love', f: 143, L: 12, pos: 'verb', n: 'related to ἀγάπη' },
+    { g: 'ζάω', d: 'ζῶ', en: 'I live', f: 140, L: 12, pos: 'verb', n: 'contracts to η: ζῇς, ζῇ, ζῆτε; related to ζωή' },
+    { g: 'ζητέω', d: 'ζητῶ', en: 'I seek, look for', f: 117, L: 12, pos: 'verb' },
+    { g: 'γεννάω', d: 'γεννῶ', en: 'I beget, give birth to', f: 97, L: 12, pos: 'verb', n: 'genesis' },
+    { g: 'περιπατέω', d: 'περιπατῶ', en: 'I walk; live, conduct myself', f: 95, L: 12, pos: 'verb', n: 'περί + πατέω; peripatetic' },
+    { g: 'ἀκολουθέω', d: 'ἀκολουθῶ', en: 'I follow', f: 90, L: 12, pos: 'verb', n: 'takes a dative object; acolyte' },
+    { g: 'πληρόω', d: 'πληρῶ', en: 'I fill, fulfill', f: 86, L: 12, pos: 'verb', n: 'πλήρωμα, “fullness”' },
+    { g: 'μαρτυρέω', d: 'μαρτυρῶ', en: 'I bear witness, testify', f: 76, L: 12, pos: 'verb', n: 'martyr' },
+    { g: 'τηρέω', d: 'τηρῶ', en: 'I keep, guard, observe', f: 70, L: 12, pos: 'verb' },
+    { g: 'φανερόω', d: 'φανερῶ', en: 'I reveal, make known', f: 49, L: 12, pos: 'verb', n: 'phenomenon' },
+    { g: 'σταυρόω', d: 'σταυρῶ', en: 'I crucify', f: 46, L: 12, pos: 'verb', n: 'from σταυρός, “cross”' },
+    { g: 'εὐλογέω', d: 'εὐλογῶ', en: 'I bless, praise', f: 41, L: 12, pos: 'verb', n: 'εὖ + λόγος; eulogy' },
+    { g: 'φιλέω', d: 'φιλῶ', en: 'I love, like; kiss', f: 25, L: 12, pos: 'verb', n: 'philosophy, Philadelphia' }
   ];
   C.vocab = V;
 

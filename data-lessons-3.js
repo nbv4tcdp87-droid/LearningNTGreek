@@ -226,4 +226,148 @@ window.COURSE = window.COURSE || {};
     ]
   });
 
+  /* ============ LESSON 13 ============ */
+  L.push({
+    n: 13, title: 'The Imperfect and Future', gk: 'ἔλυον, λύσω',
+    blurb: 'Two new tenses: the imperfect, for action going on in the past and marked by an augment, and the future, marked by σ.',
+    goals: [
+      'Tell the present, imperfect and future apart',
+      'Recognize the augment and the imperfect endings',
+      'Form the future with σ, including ψ and ξ',
+      'Read ἦν and ἔσται, “was” and “will be”'
+    ],
+    sections: [
+      { h: 'Past, present and future', html: `
+        <p>Every verb so far has been in the present tense. This lesson adds two more: the <b>imperfect</b>, a past tense, and the <b>future</b>.</p>
+        <p>A Greek tense shows more than time. It also shows the kind of action, called <b>aspect</b>. The present and the imperfect both show an action in progress or repeated. They differ only in time:</p>
+        <div class="tbl-wrap"><table class="tbl">
+          <thead><tr><th>Tense</th><th>Time</th><th>Example</th><th>Meaning</th></tr></thead>
+          <tbody>
+            <tr><td>present</td><td>now</td><td>λύω</td><td>I loose, I am loosing</td></tr>
+            <tr><td>imperfect</td><td>past, in progress</td><td>ἔλυον</td><td>I was loosing, I used to loose</td></tr>
+            <tr><td>future</td><td>later</td><td>λύσω</td><td>I will loose</td></tr>
+          </tbody>
+        </table></div>
+        <p>Greek has another past tense, the aorist, which presents an action as a single whole: “I loosed.” It comes later in this unit. When a Gospel writer uses the imperfect, he shows an action going on in the past: “he was teaching,” “they kept saying.”</p>
+        <aside class="callout latin"><b>Latin parallel.</b> The Latin imperfect does the same work. <em>docēbat</em>, “he was teaching,” matches the Greek imperfect ἐδίδασκεν, while <em>docuit</em>, “he taught,” is closer to the aorist. The Latin future <em>docēbit</em>, “he will teach,” matches διδάξει.</aside>` },
+      { h: 'The imperfect: ἔλυον', html: `
+        <p>The imperfect is built on the present stem, with two changes:</p>
+        <ol class="steps">
+          <li>An <b>augment</b>, ἐ-, goes on the front. It marks past time.</li>
+          <li>A different set of endings: -ον, -ες, -ε(ν), -ομεν, -ετε, -ον.</li>
+        </ol>
+        <div class="example"><p class="gk-line">ἐ + λυ + ον → ἔλυον</p><p>“I was loosing”</p></div>
+        <div data-para="verb:luo:impf" data-gloss="1"></div>
+        <p>Three things to notice:</p>
+        <ul>
+          <li><b>The 1st person singular and the 3rd person plural are the same.</b> ἔλυον means “I was loosing” or “they were loosing.” The subject and the context decide.</li>
+          <li><b>The 3rd person singular can add a movable ν,</b> as λύουσι(ν) does: ἔλυε or ἔλυεν.</li>
+          <li><b>The accent moves.</b> A verb’s accent goes as far toward the front as the rules allow (Lesson 3), which in the imperfect is the third syllable from the end. So it sits on the augment in ἔλυον, but on λυ in the longer ἐλύομεν.</li>
+        </ul>
+        <p>The imperfect is usually translated “was …ing.” Depending on the context, it can also mean “used to,” “kept on” or “began to.”</p>` },
+      { h: 'Verbs that begin with a vowel', html: `
+        <p>When a verb begins with a consonant, the augment adds the syllable ἐ-: λέγω → ἔλεγον, πιστεύω → ἐπίστευον. When it begins with a vowel, the augment <b>lengthens</b> that vowel instead:</p>
+        <div class="tbl-wrap"><table class="tbl">
+          <thead><tr><th>Vowel</th><th>Becomes</th><th>Example</th></tr></thead>
+          <tbody>
+            <tr><td>α</td><td>η</td><td>ἀκούω → ἤκουον</td></tr>
+            <tr><td>ε</td><td>η</td><td>ἐλπίζω, “hope” → ἤλπιζον</td></tr>
+            <tr><td>ο</td><td>ω</td><td>ὁμολογέω, “confess” → ὡμολόγουν</td></tr>
+            <tr><td>αι</td><td>ῃ</td><td>αἰτέω, “ask” → ᾔτουν</td></tr>
+            <tr><td>οι</td><td>ῳ</td><td>οἰκοδομέω, “build” → ᾠκοδόμουν</td></tr>
+            <tr><td>ι, υ</td><td>long ι, υ</td><td>the letter looks the same</td></tr>
+          </tbody>
+        </table></div>
+        <p>To look up an augmented verb, take off the ending and undo the augment. If the form begins with η, try α, then ε: ἤκουον is from ἀκούω. On the road to Emmaus the two disciples say ἡμεῖς δὲ ἠλπίζομεν, “but we were hoping” (Luke 24:21): from ἐλπίζω.</p>
+        <p>One common verb is irregular: the imperfect of ἔχω is <b>εἶχον</b>, “I had, I was having.”</p>
+        <p><b>Compound verbs</b> begin with a preposition, like περιπατέω (περί + πατέω). The augment goes between the preposition and the verb:</p>
+        <ul>
+          <li>περιπατέω → περιεπάτουν, “I was walking”</li>
+          <li>ἀποστέλλω → ἀπέστελλον, “I was sending.” A preposition that ends in a vowel usually drops it before the augment (περί is an exception).</li>
+          <li>ἐκβάλλω → ἐξέβαλλον, “I was casting out.” ἐκ becomes ἐξ before a vowel, as in Lesson 9.</li>
+        </ul>` },
+      { h: 'Contract verbs and εἰμί', html: `
+        <p>Contract verbs take the augment and the imperfect endings, and the vowels merge by the rules of Lesson 12. Under each form you can see which vowels met.</p>
+        <div data-para="cverbs:poieo,agapao,pleroo:impf" data-gloss="1"></div>
+        <p>ε + ε gives ει, so ἐποίει is “he was doing.” α + ε gives α, so ἠγάπα is “he was loving.” It has no iota subscript, because the imperfect ending -ε has no ι: compare the present ἀγαπᾷ. These forms are everywhere in the Gospels: ἐλάλει, “he was speaking”; ἠκολούθουν, “they were following”; περιεπάτει, “he was walking.”</p>
+        <p>εἰμί has an imperfect of its own. You met its 3rd person singular in Lesson 3: Ἐν ἀρχῇ ἦν ὁ λόγος, “In the beginning was the Word.”</p>
+        <div data-para="eimi:impf"></div>
+        <aside class="callout"><b>Was, not became.</b> John says ἦν of the Word three times in his first verse. In the beginning the Word already was: he did not come to be. John keeps ἐγένετο, “came to be,” for the things made through him (1:3) and for the moment the Word became flesh (1:14). The Creed says the same of the Son: “begotten, not made.”</aside>` },
+      { h: 'The future: λύσω', html: `
+        <p>The future adds σ to the present stem and uses the present endings:</p>
+        <div class="example"><p class="gk-line">λυ + σ + ω → λύσω</p><p>“I will loose”</p></div>
+        <div data-para="verb:luo:fut" data-gloss="1"></div>
+        <p>The future has no augment, because the augment belongs to the past tenses. Often the σ is the only difference from the present: λύει is “he looses,” λύσει “he will loose.”</p>
+        <p><b>Contract verbs</b> lengthen their vowel before the σ: ε and α become η, and ο becomes ω.</p>
+        <ul>
+          <li>ποιέω → ποιήσω, “I will do”</li>
+          <li>ἀγαπάω → ἀγαπήσω, “I will love”</li>
+          <li>πληρόω → πληρώσω, “I will fill”</li>
+        </ul>
+        <p>καλέω is an exception: it keeps the short ε, καλέσω.</p>
+        <p>Here are the three tenses of λύω side by side:</p>
+        <div data-para="tenses:luo"></div>` },
+      { h: 'When σ meets a consonant', html: `
+        <p>If the stem ends in a consonant, the σ combines with it, just as it does in third-declension nominatives like σάρξ (Lesson 11):</p>
+        <div class="tbl-wrap"><table class="tbl">
+          <thead><tr><th>Stem ends in</th><th>+ σ gives</th><th>Examples</th></tr></thead>
+          <tbody>
+            <tr><td>π, β, φ</td><td>ψ</td><td>βλέπω → βλέψω; γράφω → γράψω; πέμπω → πέμψω</td></tr>
+            <tr><td>κ, γ, χ</td><td>ξ</td><td>διώκω → διώξω; ἄγω → ἄξω; κηρύσσω → κηρύξω</td></tr>
+            <tr><td>τ, δ, θ, ζ</td><td>σ (the consonant drops)</td><td>σῴζω → σώσω; βαπτίζω → βαπτίσω</td></tr>
+          </tbody>
+        </table></div>
+        <p>Two hints. Verbs in -σσω, like κηρύσσω, usually have a future in -ξω. Verbs in -ζω usually have a future in -σω. (σῴζω also loses its iota subscript.) In διδάσκω the -σκ- belongs only to the present, so the future is διδάξω.</p>
+        <p><b>Liquid verbs.</b> Stems that end in λ, μ, ν or ρ do not take σ. Their future adds ε instead and contracts like an ε-verb:</p>
+        <div class="example"><p class="gk-line">μένω → μενῶ, μενεῖς, μενεῖ, μενοῦμεν, μενεῖτε, μενοῦσι(ν)</p><p>Only the accent separates μένει, “he remains,” from μενεῖ, “he will remain.”</p></div>
+        <p>Five verbs in this lesson’s vocabulary have liquid futures: ἀποστέλλω → ἀποστελῶ, ἐκβάλλω → ἐκβαλῶ, κρίνω → κρινῶ, ἐγείρω → ἐγερῶ and αἴρω → ἀρῶ. A double λ in the present becomes single in the future.</p>
+        <p><b>Learn these separately.</b> ἔχω has the future <b>ἕξω</b>, with a rough breathing. λέγω uses another stem: <b>ἐρῶ</b>, ἐρεῖς, ἐρεῖ, which contracts like μενῶ. Some common verbs have a future with middle endings, such as γινώσκω → γνώσομαι and λαμβάνω → λήμψομαι. Those endings come in Lesson 14.</p>` },
+      { h: 'The future of εἰμί, and the future as a command', html: `
+        <p>εἰμί forms its future with middle endings, which come in Lesson 14. Learn the forms now, starting with ἔσται, “he/she/it will be,” and ἔσονται, “they will be.”</p>
+        <div data-para="eimi:fut"></div>
+        <p>The future can also give a command, as English can: “You will be home by nine.” The Septuagint gives the commandments this way, and the New Testament quotes them so:</p>
+        <div class="example"><p class="gk-line">ἀγαπήσεις κύριον τὸν θεόν σου</p><p>“You shall love the Lord your God” (Deut 6:5)</p><p class="gk-line">οὐ φονεύσεις, οὐ μοιχεύσεις, οὐ κλέψεις</p><p>“You shall not murder, you shall not commit adultery, you shall not steal” (Matt 19:18)</p></div>
+        <p>φονεύσεις and μοιχεύσεις add σ like λύσω. κλέψεις is from κλέπτω, “I steal” (compare <em>kleptomaniac</em>): πτ + σ gives ψ.</p>
+        <aside class="callout latin"><b>Latin parallel.</b> The Vulgate uses the Latin future the same way: <em>diliges Dominum Deum tuum</em>, “you shall love the Lord your God” (Deut 6:5), and <em>non occides</em>, “you shall not kill” (Exod 20:13).</aside>` }
+    ],
+    texts: [
+      { ref: 'Mark 4:2', src: 'NT', w: [['καὶ', 'and'], ['ἐδίδασκεν', 'he was teaching'], ['αὐτοὺς', 'them'], ['ἐν', 'in'], ['παραβολαῖς', 'parables (dat. pl.)'], ['πολλά,', 'many things'], ['καὶ', 'and'], ['ἔλεγεν', 'he was saying'], ['αὐτοῖς', 'to them'], ['ἐν', 'in'], ['τῇ', 'the'], ['διδαχῇ', 'teaching (dat. sg.)'], ['αὐτοῦ·', 'his']],
+        en: 'And he was teaching them many things in parables, and in his teaching he was saying to them:',
+        notes: ['ἐδίδασκεν and ἔλεγεν are imperfects: the augment ἐ-, the present stem, and the ending -ε(ν), here with movable ν.', 'Mark uses the imperfect to show Jesus teaching over a stretch of time. The Vulgate has Latin imperfects: <em>docebat</em>, <em>dicebat</em>.', 'διδαχή, “teaching,” comes from the same root as διδάσκω.', 'πολλά, “many things,” is the neuter plural of πολύς, “much, many.”'] },
+      { ref: 'John 11:36', src: 'NT', w: [['ἔλεγον', 'were saying'], ['οὖν', 'so, then'], ['οἱ', 'the'], ['Ἰουδαῖοι·', 'Jews, Judeans'], ['Ἴδε', 'look!'], ['πῶς', 'how'], ['ἐφίλει', 'he loved'], ['αὐτόν.', 'him']],
+        en: 'So the Jews were saying, “Look how he loved him!”',
+        notes: ['ἔλεγον could mean “I was saying” or “they were saying.” The plural subject, οἱ Ἰουδαῖοι, decides.', 'ἐφίλει is the imperfect of φιλέω: ἐ + φιλε + ε, and ε + ε gives ει.', 'The bystanders say this when Jesus weeps at the tomb of his friend Lazarus (11:35).', 'Ἴδε, “look!”, is a command form. Commands come later in the course.'] },
+      { ref: 'Luke 2:19', src: 'NT', w: [['ἡ', 'the'], ['δὲ', 'but, and'], ['Μαρία', 'Mary'], ['πάντα', 'all'], ['συνετήρει', 'kept, treasured'], ['τὰ', 'the'], ['ῥήματα', 'words, things'], ['ταῦτα', 'these'], ['συμβάλλουσα', 'pondering'], ['ἐν', 'in'], ['τῇ', 'the'], ['καρδίᾳ', 'heart'], ['αὐτῆς.', 'her']],
+        en: 'But Mary kept all these things, pondering them in her heart.',
+        notes: ['συνετήρει is the imperfect of συντηρέω, σύν + τηρέω (Lesson 12). The augment comes after the preposition: συν-ε-τήρει.', 'The imperfect shows something Mary went on doing: she kept these things and kept pondering them.', 'ῥήματα, the plural of ῥῆμα (Lesson 11), can mean “words” or “things, events.”', 'ταῦτα, “these,” and the participle συμβάλλουσα, “pondering,” come later in this unit.', 'Some manuscripts and editions read Μαριάμ here, the Semitic form of the name that Luke uses for Mary elsewhere (1:27, 1:30).', 'Luke says it again after the finding in the Temple, with another compound of τηρέω: ἡ μήτηρ αὐτοῦ διετήρει πάντα τὰ ῥήματα ἐν τῇ καρδίᾳ αὐτῆς (2:51).'] },
+      { ref: 'Deut 6:5', src: 'LXX', w: [['καὶ', 'and'], ['ἀγαπήσεις', 'you shall love'], ['κύριον', 'the Lord'], ['τὸν', 'the'], ['θεόν', 'God'], ['σου', 'your'], ['ἐξ', 'with (lit. “out of”)'], ['ὅλης', 'whole, all'], ['τῆς', 'the'], ['καρδίας', 'heart'], ['σου', 'your'], ['καὶ', 'and'], ['ἐξ', 'with'], ['ὅλης', 'whole, all'], ['τῆς', 'the'], ['ψυχῆς', 'soul'], ['σου', 'your'], ['καὶ', 'and'], ['ἐξ', 'with'], ['ὅλης', 'whole, all'], ['τῆς', 'the'], ['δυνάμεώς', 'strength, power'], ['σου.', 'your']],
+        en: 'And you shall love the Lord your God with all your heart and with all your soul and with all your strength.',
+        notes: ['ἀγαπήσεις is the future of ἀγαπάω, 2nd person singular. The α lengthens to η before σ.', 'The future here gives a command: “you shall love.” Jesus calls this the greatest and first commandment (Matt 22:37–38).', 'This verse follows the Shema, Deut 6:4, which you read in Lesson 5.', 'ὅλης is from ὅλος, “whole.” δυνάμεως is the genitive of δύναμις, “power,” a third-declension noun.'] },
+      { ref: 'Isa 7:14', src: 'LXX', w: [['ἰδοὺ', 'behold'], ['ἡ', 'the'], ['παρθένος', 'virgin'], ['ἐν', 'in'], ['γαστρὶ', 'womb (dat. sg.)'], ['ἕξει', 'will have'], ['καὶ', 'and'], ['τέξεται', 'will bear'], ['υἱόν,', 'a son'], ['καὶ', 'and'], ['καλέσεις', 'you will call'], ['τὸ', 'the'], ['ὄνομα', 'name'], ['αὐτοῦ', 'his'], ['Εμμανουηλ·', 'Emmanuel']],
+        en: 'Behold, the virgin will conceive and bear a son, and you will call his name Emmanuel.',
+        notes: ['ἕξει is the future of ἔχω: note the rough breathing. ἐν γαστρὶ ἔχω, “I have in the womb,” means “I am with child.”', 'καλέσεις, “you will call,” is the future of καλέω, which keeps its short ε.', 'τέξεται, “she will bear,” has a middle ending (Lesson 14).', 'Rahlfs prints the Hebrew name Εμμανουηλ without accent or breathing.', 'Matthew quotes this verse for the virginal conception of Jesus, with καλέσουσιν, “they will call,” and gives the meaning of the name: “God with us” (Matt 1:23; Catechism 497).'] },
+      { ref: 'Luke 1:33', src: 'NT', w: [['καὶ', 'and'], ['βασιλεύσει', 'he will reign'], ['ἐπὶ', 'over'], ['τὸν', 'the'], ['οἶκον', 'house'], ['Ἰακὼβ', 'of Jacob'], ['εἰς', 'into'], ['τοὺς', 'the'], ['αἰῶνας,', 'ages'], ['καὶ', 'and'], ['τῆς', 'the'], ['βασιλείας', 'kingdom (gen.)'], ['αὐτοῦ', 'his'], ['οὐκ', 'not'], ['ἔσται', 'will be'], ['τέλος.', 'end']],
+        en: 'And he will reign over the house of Jacob forever, and of his kingdom there will be no end.',
+        notes: ['βασιλεύσει is the future of βασιλεύω, “I reign”: βασιλευ + σ + ει.', 'ἔσται, “will be,” is the future of εἰμί.', 'εἰς τοὺς αἰῶνας, “into the ages,” means “forever.”', 'Gabriel says this to Mary at the Annunciation. The Nicene Creed takes up his words: οὗ τῆς βασιλείας οὐκ ἔσται τέλος, in Latin <em>cuius regni non erit finis</em>, “and his kingdom will have no end.” <em>erit</em> is the future of <em>sum</em>, as ἔσται is of εἰμί.'] }
+    ],
+    ex: [
+      { t: 'mc', q: 'What does the augment ἐ- at the front of a verb tell you?', o: ['The action is in the past', 'The action is in the future', 'The subject is plural', 'The verb is a contract verb'], a: 0, x: 'ἔλυον, “I was loosing,” has the augment. The present λύω and the future λύσω do not.' },
+      { t: 'mc', q: 'Parse <span class="big">ἔλυες</span>.', o: ['imperfect, 2nd person singular', 'present, 2nd person singular', 'future, 2nd person singular', 'imperfect, 1st person singular'], a: 0, x: 'Augment + λυ + -ες. The present is λύεις and the future λύσεις.' },
+      { t: 'mc', q: '<span class="big">ἔλεγον</span> can mean…', o: ['“I was saying” or “they were saying”', 'only “I was saying”', '“we were saying”', '“I will say”'], a: 0, x: 'In the imperfect, the 1st person singular and the 3rd person plural both end in -ον.' },
+      { t: 'mc', q: 'Parse <span class="big">λύσομεν</span>.', o: ['future, 1st person plural', 'present, 1st person plural', 'imperfect, 1st person plural', 'future, 3rd person plural'], a: 0, x: 'σ + the present ending -ομεν. The present is λύομεν and the imperfect ἐλύομεν.' },
+      { t: 'mc', q: 'What is the future of <span class="big">βλέπω</span>?', o: ['βλέψω', 'βλέπσω', 'βλέξω', 'ἔβλεπον'], a: 0, x: 'π + σ gives ψ. ἔβλεπον is the imperfect.' },
+      { t: 'mc', q: 'What is the future of <span class="big">ποιέω</span>?', o: ['ποιήσω', 'ποιέσω', 'ποιῶ', 'ἐποίουν'], a: 0, x: 'A contract verb lengthens its vowel before σ: ε becomes η. ποιῶ is the present and ἐποίουν the imperfect.' },
+      { t: 'mc', q: 'What is the imperfect, 3rd person singular, of <span class="big">ἀκούω</span>?', o: ['ἤκουε(ν)', 'ἐάκουε(ν)', 'ἀκούσει', 'ἀκούει'], a: 0, x: 'A verb that begins with α lengthens it to η instead of adding ἐ-.' },
+      { t: 'mc', q: 'You meet <span class="big">ἠγάπα</span> in a text. Which verb do you look up?', o: ['ἀγαπάω', 'ἠγαπάω', 'ἐγαπάω', 'ἀγαπέω'], a: 0, x: 'Take off the augment: the η was α. The ending -α (α + ε) shows an α-verb. ἠγάπα means “he was loving.”' },
+      { t: 'mc', q: 'What is the imperfect, 1st person singular, of <span class="big">περιπατέω</span>?', o: ['περιεπάτουν', 'ἐπεριπάτουν', 'περιπατοῦν', 'περιπάτουν'], a: 0, x: 'In a compound verb the augment goes after the preposition: περι-ε-πάτουν.' },
+      { t: 'mc', q: 'Which is the future of <span class="big">ἔχω</span>?', o: ['ἕξω', 'ἔξω', 'εἶχον', 'ἔχσω'], a: 0, x: 'Note the rough breathing. ἔξω, with a smooth breathing, is a different word: “outside.” εἶχον is the imperfect.' },
+      { t: 'mc', q: 'Parse <span class="big">μενεῖ</span>.', o: ['future, 3rd person singular of μένω', 'present, 3rd person singular of μένω', 'imperfect, 3rd person singular of μένω', 'present, 3rd person singular of μενέω'], a: 0, x: 'μένω has a liquid stem, so its future has no σ and contracts like an ε-verb. The present is μένει and the imperfect ἔμενε(ν).' },
+      { t: 'mc', q: 'Which form means “they were”?', o: ['ἦσαν', 'ἦν', 'ἔσονται', 'εἰσί(ν)'], a: 0, x: 'ἦν is “he/she/it was,” ἔσονται “they will be,” and εἰσί(ν) “they are.”' },
+      { t: 'mc', q: 'In <span class="big">ἀγαπήσεις κύριον τὸν θεόν σου</span>, the future…', o: ['gives a command: “you shall love”', 'describes the past: “you were loving”', 'is really a present: “you love”', 'is plural: “you all will love”'], a: 0, x: 'The future can give a command, as in the commandments: οὐ κλέψεις, “you shall not steal.”' },
+      { t: 'match', q: 'Match each form to its meaning.', pairs: [['λύει', 'he looses'], ['ἔλυε', 'he was loosing'], ['λύσει', 'he will loose'], ['ἐστί', 'he is'], ['ἦν', 'he was'], ['ἔσται', 'he will be']] },
+      { t: 'self', q: 'Translate:', gk: 'ὁ Ἰησοῦς ἐδίδασκεν τοὺς μαθητὰς καὶ ἐλάλει αὐτοῖς τὸν λόγον.', a: 'Jesus was teaching the disciples and speaking the word to them.', x: 'ἐδίδασκεν and ἐλάλει are imperfects: actions going on in the past. ἐλάλει is from λαλέω (ε + ε gives ει). Mark 2:2 has the same words: ἐλάλει αὐτοῖς τὸν λόγον.' },
+      { t: 'self', q: 'Translate:', gk: 'οἱ μαθηταὶ κηρύξουσι τὸ εὐαγγέλιον, καὶ ὁ κύριος ἔσται μετ᾽ αὐτῶν.', a: 'The disciples will proclaim the gospel, and the Lord will be with them.', x: 'κηρύξουσι is the future of κηρύσσω: the stem ends in κ, and κ + σ gives ξ. ἔσται is the future of εἰμί. μετά with the genitive means “with” (Lesson 9).' }
+    ]
+  });
+
 })(window.COURSE);

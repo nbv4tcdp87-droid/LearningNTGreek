@@ -49,19 +49,25 @@ window.COURSE = window.COURSE || {};
 
   // Present active indicative: accented stem + endings (accent stays on the stem's last syllable)
   P.verbEndings = ['ω', 'εις', 'ει', 'ομεν', 'ετε', 'ουσι(ν)'];
+  // Lesson 13. impf: [stem for 1-3 sg. and 3 pl., stem for 1-2 pl.], both augmented and accented
+  // (the accent is recessive, so it shifts in the longer 1st and 2nd plural: ἔλυον, ἐλύομεν).
+  // fut: accented future stem + P.verbEndings, or, with fcv, unaccented stem + P.cEndings[fcv]
+  // (liquid futures such as μενῶ contract like ε-verbs). No fut: the future is middle (γνώσομαι, λήμψομαι).
+  // ing: the -ing form for imperfect glosses ("I was loosing").
+  P.impfEndings = ['ον', 'ες', 'ε(ν)', 'ομεν', 'ετε', 'ον'];
   P.verbs = {
-    luo: { lemma: 'λύω', stem: 'λύ', en: 'loose', en3: 'looses', L: 4 },
-    lego: { lemma: 'λέγω', stem: 'λέγ', en: 'say', en3: 'says', L: 4 },
-    echo: { lemma: 'ἔχω', stem: 'ἔχ', en: 'have', en3: 'has', L: 4 },
-    akouo: { lemma: 'ἀκούω', stem: 'ἀκού', en: 'hear', en3: 'hears', L: 4 },
-    blepo: { lemma: 'βλέπω', stem: 'βλέπ', en: 'see', en3: 'sees', L: 4 },
-    ginosko: { lemma: 'γινώσκω', stem: 'γινώσκ', en: 'know', en3: 'knows', L: 4 },
-    pisteuo: { lemma: 'πιστεύω', stem: 'πιστεύ', en: 'believe', en3: 'believes', L: 4 },
-    grapho: { lemma: 'γράφω', stem: 'γράφ', en: 'write', en3: 'writes', L: 4 },
-    lambano: { lemma: 'λαμβάνω', stem: 'λαμβάν', en: 'take', en3: 'takes', L: 4 },
-    didasko: { lemma: 'διδάσκω', stem: 'διδάσκ', en: 'teach', en3: 'teaches', L: 4 },
-    meno: { lemma: 'μένω', stem: 'μέν', en: 'remain', en3: 'remains', L: 4 },
-    pempo: { lemma: 'πέμπω', stem: 'πέμπ', en: 'send', en3: 'sends', L: 4 }
+    luo: { lemma: 'λύω', stem: 'λύ', en: 'loose', en3: 'looses', ing: 'loosing', impf: ['ἔλυ', 'ἐλύ'], fut: 'λύσ', L: 4 },
+    lego: { lemma: 'λέγω', stem: 'λέγ', en: 'say', en3: 'says', ing: 'saying', impf: ['ἔλεγ', 'ἐλέγ'], fut: 'ἐρ', fcv: 'ε', L: 4 },
+    echo: { lemma: 'ἔχω', stem: 'ἔχ', en: 'have', en3: 'has', ing: 'having', impf: ['εἶχ', 'εἴχ'], fut: 'ἕξ', L: 4 },
+    akouo: { lemma: 'ἀκούω', stem: 'ἀκού', en: 'hear', en3: 'hears', ing: 'hearing', impf: ['ἤκου', 'ἠκού'], fut: 'ἀκούσ', L: 4 },
+    blepo: { lemma: 'βλέπω', stem: 'βλέπ', en: 'see', en3: 'sees', ing: 'seeing', impf: ['ἔβλεπ', 'ἐβλέπ'], fut: 'βλέψ', L: 4 },
+    ginosko: { lemma: 'γινώσκω', stem: 'γινώσκ', en: 'know', en3: 'knows', ing: 'knowing', impf: ['ἐγίνωσκ', 'ἐγινώσκ'], L: 4 },
+    pisteuo: { lemma: 'πιστεύω', stem: 'πιστεύ', en: 'believe', en3: 'believes', ing: 'believing', impf: ['ἐπίστευ', 'ἐπιστεύ'], fut: 'πιστεύσ', L: 4 },
+    grapho: { lemma: 'γράφω', stem: 'γράφ', en: 'write', en3: 'writes', ing: 'writing', impf: ['ἔγραφ', 'ἐγράφ'], fut: 'γράψ', L: 4 },
+    lambano: { lemma: 'λαμβάνω', stem: 'λαμβάν', en: 'take', en3: 'takes', ing: 'taking', impf: ['ἐλάμβαν', 'ἐλαμβάν'], L: 4 },
+    didasko: { lemma: 'διδάσκω', stem: 'διδάσκ', en: 'teach', en3: 'teaches', ing: 'teaching', impf: ['ἐδίδασκ', 'ἐδιδάσκ'], fut: 'διδάξ', L: 4 },
+    meno: { lemma: 'μένω', stem: 'μέν', en: 'remain', en3: 'remains', ing: 'remaining', impf: ['ἔμεν', 'ἐμέν'], fut: 'μεν', fcv: 'ε', L: 4 },
+    pempo: { lemma: 'πέμπω', stem: 'πέμπ', en: 'send', en3: 'sends', ing: 'sending', impf: ['ἔπεμπ', 'ἐπέμπ'], fut: 'πέμψ', L: 4 }
   };
 
   // Contract verbs (Lesson 12): unaccented stem (minus the contract vowel) + contracted endings.
@@ -72,22 +78,34 @@ window.COURSE = window.COURSE || {};
     'α': ['ῶ', 'ᾷς', 'ᾷ', 'ῶμεν', 'ᾶτε', 'ῶσι(ν)'],
     'ο': ['ῶ', 'οῖς', 'οῖ', 'οῦμεν', 'οῦτε', 'οῦσι(ν)']
   };
+  // Imperfect (Lesson 13): impf[0] is accented on the stem (ἐποί-ουν), impf[1] is unaccented and the
+  // ending carries the circumflex (ἐποι-οῦμεν). The future lengthens the contract vowel: ποιήσ- + P.verbEndings.
+  P.cImpfEndings = {
+    'ε': ['ουν', 'εις', 'ει', 'οῦμεν', 'εῖτε', 'ουν'],
+    'α': ['ων', 'ας', 'α', 'ῶμεν', 'ᾶτε', 'ων'],
+    'ο': ['ουν', 'ους', 'ου', 'οῦμεν', 'οῦτε', 'ουν']
+  };
   P.cverbs = {
-    poieo: { lemma: 'ποιέω', stem: 'ποι', cv: 'ε', en: 'do', en3: 'does', L: 12 },
-    laleo: { lemma: 'λαλέω', stem: 'λαλ', cv: 'ε', en: 'speak', en3: 'speaks', L: 12 },
-    kaleo: { lemma: 'καλέω', stem: 'καλ', cv: 'ε', en: 'call', en3: 'calls', L: 12 },
-    zeteo: { lemma: 'ζητέω', stem: 'ζητ', cv: 'ε', en: 'seek', en3: 'seeks', L: 12 },
-    tereo: { lemma: 'τηρέω', stem: 'τηρ', cv: 'ε', en: 'keep', en3: 'keeps', L: 12 },
-    phileo: { lemma: 'φιλέω', stem: 'φιλ', cv: 'ε', en: 'love', en3: 'loves', L: 12 },
-    agapao: { lemma: 'ἀγαπάω', stem: 'ἀγαπ', cv: 'α', en: 'love', en3: 'loves', L: 12 },
-    gennao: { lemma: 'γεννάω', stem: 'γενν', cv: 'α', en: 'beget', en3: 'begets', L: 12 },
-    pleroo: { lemma: 'πληρόω', stem: 'πληρ', cv: 'ο', en: 'fill', en3: 'fills', L: 12 },
-    phaneroo: { lemma: 'φανερόω', stem: 'φανερ', cv: 'ο', en: 'reveal', en3: 'reveals', L: 12 },
-    stauroo: { lemma: 'σταυρόω', stem: 'σταυρ', cv: 'ο', en: 'crucify', en3: 'crucifies', L: 12 }
+    poieo: { lemma: 'ποιέω', stem: 'ποι', cv: 'ε', en: 'do', en3: 'does', ing: 'doing', impf: ['ἐποί', 'ἐποι'], fut: 'ποιήσ', L: 12 },
+    laleo: { lemma: 'λαλέω', stem: 'λαλ', cv: 'ε', en: 'speak', en3: 'speaks', ing: 'speaking', impf: ['ἐλάλ', 'ἐλαλ'], fut: 'λαλήσ', L: 12 },
+    kaleo: { lemma: 'καλέω', stem: 'καλ', cv: 'ε', en: 'call', en3: 'calls', ing: 'calling', impf: ['ἐκάλ', 'ἐκαλ'], fut: 'καλέσ', L: 12 },
+    zeteo: { lemma: 'ζητέω', stem: 'ζητ', cv: 'ε', en: 'seek', en3: 'seeks', ing: 'seeking', impf: ['ἐζήτ', 'ἐζητ'], fut: 'ζητήσ', L: 12 },
+    tereo: { lemma: 'τηρέω', stem: 'τηρ', cv: 'ε', en: 'keep', en3: 'keeps', ing: 'keeping', impf: ['ἐτήρ', 'ἐτηρ'], fut: 'τηρήσ', L: 12 },
+    phileo: { lemma: 'φιλέω', stem: 'φιλ', cv: 'ε', en: 'love', en3: 'loves', ing: 'loving', impf: ['ἐφίλ', 'ἐφιλ'], fut: 'φιλήσ', L: 12 },
+    agapao: { lemma: 'ἀγαπάω', stem: 'ἀγαπ', cv: 'α', en: 'love', en3: 'loves', ing: 'loving', impf: ['ἠγάπ', 'ἠγαπ'], fut: 'ἀγαπήσ', L: 12 },
+    gennao: { lemma: 'γεννάω', stem: 'γενν', cv: 'α', en: 'beget', en3: 'begets', ing: 'begetting', impf: ['ἐγένν', 'ἐγενν'], fut: 'γεννήσ', L: 12 },
+    pleroo: { lemma: 'πληρόω', stem: 'πληρ', cv: 'ο', en: 'fill', en3: 'fills', ing: 'filling', impf: ['ἐπλήρ', 'ἐπληρ'], fut: 'πληρώσ', L: 12 },
+    phaneroo: { lemma: 'φανερόω', stem: 'φανερ', cv: 'ο', en: 'reveal', en3: 'reveals', ing: 'revealing', impf: ['ἐφανέρ', 'ἐφανερ'], fut: 'φανερώσ', L: 12 },
+    stauroo: { lemma: 'σταυρόω', stem: 'σταυρ', cv: 'ο', en: 'crucify', en3: 'crucifies', ing: 'crucifying', impf: ['ἐσταύρ', 'ἐσταυρ'], fut: 'σταυρώσ', L: 12 }
   };
 
   P.eimi = { lemma: 'εἰμί', sg: ['εἰμί', 'εἶ', 'ἐστί(ν)'], pl: ['ἐσμέν', 'ἐστέ', 'εἰσί(ν)'],
     en: [['I am', 'you are', 'he/she/it is'], ['we are', 'you (pl.) are', 'they are']], L: 10 };
+  // Lesson 13. The future has middle endings (Lesson 14).
+  P.eimi.impf = { sg: ['ἤμην', 'ἦς', 'ἦν'], pl: ['ἦμεν', 'ἦτε', 'ἦσαν'],
+    en: [['I was', 'you were', 'he/she/it was'], ['we were', 'you (pl.) were', 'they were']] };
+  P.eimi.fut = { sg: ['ἔσομαι', 'ἔσῃ', 'ἔσται'], pl: ['ἐσόμεθα', 'ἔσεσθε', 'ἔσονται'],
+    en: [['I will be', 'you will be', 'he/she/it will be'], ['we will be', 'you (pl.) will be', 'they will be']] };
 
   P.article = {
     m: { sg: ['ὁ', 'τοῦ', 'τῷ', 'τόν'], pl: ['οἱ', 'τῶν', 'τοῖς', 'τούς'] },
@@ -368,7 +386,24 @@ window.COURSE = window.COURSE || {};
     { g: 'φανερόω', d: 'φανερῶ', en: 'I reveal, make known', f: 49, L: 12, pos: 'verb', n: 'phenomenon' },
     { g: 'σταυρόω', d: 'σταυρῶ', en: 'I crucify', f: 46, L: 12, pos: 'verb', n: 'from σταυρός, “cross”' },
     { g: 'εὐλογέω', d: 'εὐλογῶ', en: 'I bless, praise', f: 41, L: 12, pos: 'verb', n: 'εὖ + λόγος; eulogy' },
-    { g: 'φιλέω', d: 'φιλῶ', en: 'I love, like; kiss', f: 25, L: 12, pos: 'verb', n: 'philosophy, Philadelphia' }
+    { g: 'φιλέω', d: 'φιλῶ', en: 'I love, like; kiss', f: 25, L: 12, pos: 'verb', n: 'philosophy, Philadelphia' },
+    // Lesson 13 — imperfect and future (d gives the future)
+    { g: 'ἐγείρω', d: 'fut. ἐγερῶ', en: 'I raise up; (passive) I rise', f: 144, L: 13, pos: 'verb', n: 'John 2:19: ἐν τρισὶν ἡμέραις ἐγερῶ αὐτόν, “in three days I will raise it up”' },
+    { g: 'ἀποστέλλω', d: 'fut. ἀποστελῶ', en: 'I send, send out', f: 132, L: 13, pos: 'verb', n: 'apostle, one who is sent; imperfect ἀπέστελλον' },
+    { g: 'κρίνω', d: 'fut. κρινῶ', en: 'I judge, decide', f: 114, L: 13, pos: 'verb', n: 'critic, crisis' },
+    { g: 'σῴζω', d: 'fut. σώσω', en: 'I save, rescue, heal', f: 106, L: 13, pos: 'verb', n: 'related to σωτηρία, “salvation”' },
+    { g: 'αἴρω', d: 'fut. ἀρῶ', en: 'I take up, take away', f: 101, L: 13, pos: 'verb', n: 'John 1:29: ὁ αἴρων τὴν ἁμαρτίαν τοῦ κόσμου, “who takes away the sin of the world”' },
+    { g: 'ἐκβάλλω', d: 'fut. ἐκβαλῶ', en: 'I cast out, drive out', f: 81, L: 13, pos: 'verb', n: 'ἐκ + βάλλω, “throw”; imperfect ἐξέβαλλον' },
+    { g: 'βαπτίζω', d: 'fut. βαπτίσω', en: 'I baptize, wash', f: 77, L: 13, pos: 'verb', n: 'baptism' },
+    { g: 'ἄγω', d: 'fut. ἄξω', en: 'I lead, bring', f: 67, L: 13, pos: 'verb', n: 'synagogue (σύν + ἄγω); imperfect ἦγον' },
+    { g: 'δοξάζω', d: 'fut. δοξάσω', en: 'I glorify, praise', f: 61, L: 13, pos: 'verb', n: 'related to δόξα' },
+    { g: 'κηρύσσω', d: 'fut. κηρύξω', en: 'I proclaim, preach', f: 59, L: 13, pos: 'verb', n: 'kerygma, the Church’s proclamation' },
+    { g: 'διώκω', d: 'fut. διώξω', en: 'I pursue, persecute', f: 45, L: 13, pos: 'verb' },
+    { g: 'θεραπεύω', d: 'fut. θεραπεύσω', en: 'I heal; serve', f: 43, L: 13, pos: 'verb', n: 'therapy' },
+    { g: 'τότε', en: 'then, at that time', f: 160, L: 13, pos: 'adv.', n: 'a favorite word of Matthew' },
+    { g: 'πάλιν', en: 'again, back', f: 141, L: 13, pos: 'adv.', n: 'palindrome' },
+    { g: 'ἔτι', en: 'still, yet; more', f: 93, L: 13, pos: 'adv.' },
+    { g: 'ἤδη', en: 'already, now', f: 61, L: 13, pos: 'adv.' }
   ];
   C.vocab = V;
 

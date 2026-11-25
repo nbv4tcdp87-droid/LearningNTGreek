@@ -2,10 +2,10 @@
 
 A free beginner's course in **Septuagint and New Testament Greek**, starting from the alphabet.
 
-Unit 1 has ten lessons, from the alphabet to εἰμί and the personal pronouns. Unit 2 is under way: Lesson 11 covers the third declension and Lesson 12 contract verbs. Each lesson includes explanations, paradigm tables, verses from the LXX and NT with tap-for-meaning glosses, and exercises. The site also has:
+Unit 1 has ten lessons, from the alphabet to εἰμί and the personal pronouns. Unit 2 is under way: Lesson 11 covers the third declension, Lesson 12 contract verbs, and Lesson 13 the imperfect and future. Each lesson includes explanations, paradigm tables, verses from the LXX and NT with tap-for-meaning glosses, and exercises. The site also has:
 
 - **Alphabet:** matching rounds that pair each letter with its name and with its sound spelled in phonetic English; a quick quiz in five versions that rotate on each visit, each asking one question about every letter; and a chart.
-- **Vocabulary:** 122 high-frequency words with spaced-repetition flashcards, a quick quiz and a searchable word list.
+- **Vocabulary:** 138 high-frequency words with spaced-repetition flashcards, a quick quiz and a searchable word list.
 - **Grammar review:** parsing and form-building drills, paradigm recall and mixed lesson review.
 - **Paradigms:** every table in one place.
 

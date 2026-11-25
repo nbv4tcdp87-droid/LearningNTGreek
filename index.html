@@ -521,46 +521,64 @@ function withEnd(form, len) {
 function cell(f, gl) { return '<td><span class="f">' + f + '</span>' + (gl ? '<span class="gl">' + esc(gl) + '</span>' : '') + '</td>'; }
 const verbEnds = v => v.cv ? P.cEndings[v.cv] : P.verbEndings;
 const TENSE = { pres: 'Present', impf: 'Imperfect', fut: 'Future' };
-// The six forms of a verb in one tense (1st–3rd sg., then pl.), each as [stem, ending]
-function verbParts(v, t) {
+const VOICE = { act: 'active', mp: 'middle/passive', m: 'middle' };
+// Accent handling for middle/passive forms: an accented ending takes the stem without its accent
+const ACCENTS = /[̀́͂]/g;
+const bare = s => s.normalize('NFD').replace(ACCENTS, '').normalize('NFC');
+const accented = s => /[̀́͂]/.test(s.normalize('NFD'));
+const joinMp = (stem, e) => [accented(e) ? bare(stem) : stem, e];
+// Does this verb have a future middle? Liquid futures (μενῶ) are left out.
+const hasFutM = v => !!(v.futm || (v.fut && !v.fcv));
+// The six forms of a verb in one tense and voice (1st–3rd sg., then pl.), each as [stem, ending].
+// voice: 'act' (default), 'mp' (present/imperfect middle-passive) or 'm' (future middle).
+function verbParts(v, t, voice) {
+  if (voice === 'mp' || voice === 'm') {
+    if (t === 'impf') return (v.cv ? P.cImpfMpEndings[v.cv] : P.impfMpEndings).map(e => joinMp(v.impf[1], e));
+    if (t === 'fut') return P.mpEndings.map(e => joinMp(v.futm || v.fut, e));
+    return (v.cv ? P.cMpEndings[v.cv] : P.mpEndings).map(e => joinMp(v.stem, e));
+  }
   if (t === 'impf') return (v.cv ? P.cImpfEndings[v.cv] : P.impfEndings).map((e, i) => [v.impf[i === 3 || i === 4 ? 1 : 0], e]);
   if (t === 'fut') return (v.fcv ? P.cEndings[v.fcv] : P.verbEndings).map(e => [v.fut, e]);
   return verbEnds(v).map(e => [v.stem, e]);
 }
-const verbForms = (v, t) => verbParts(v, t).map(x => x[0] + x[1]);
+const verbForms = (v, t, voice) => verbParts(v, t, voice).map(x => x[0] + x[1]);
 const SUBJ = [['I', 'you', 'he/she/it'], ['we', 'you (pl.)', 'they']];
-function verbGloss(v, t, n, p) {
+function verbGloss(v, t, n, p, voice) {
   const s = SUBJ[n][p];
-  if (t === 'impf') return s + (n === 0 && p !== 1 ? ' was ' : ' were ') + v.ing;
+  const was = n === 0 && p !== 1 ? ' was ' : ' were ';
+  if (voice === 'mp') return t === 'impf' ? s + was + 'being ' + v.pp : s + ' ' + (n === 0 ? ['am', 'are', 'is'][p] : 'are') + ' ' + v.pp;
+  if (t === 'impf') return s + was + v.ing;
   if (t === 'fut') return s + ' will ' + v.en;
   return s + ' ' + (n === 0 && p === 2 ? v.en3 : v.en);
 }
 const formCell = x => esc(x[0]) + '<span class="end">' + esc(x[1]) + '</span>';
-function verbTable(v, gloss, t) {
+const tvName = (t, voice) => TENSE[t] + ' ' + VOICE[voice || 'act'];
+function verbTable(v, gloss, t, voice) {
   t = t || 'pres';
-  const parts = verbParts(v, t);
+  const parts = verbParts(v, t, voice);
   let rows = '';
   for (let p = 0; p < 3; p++) {
     rows += '<tr><th scope="row">' + PN[0][p] + '</th>';
-    for (let n = 0; n < 2; n++) rows += cell(formCell(parts[n * 3 + p]), gloss ? verbGloss(v, t, n, p) : '');
+    for (let n = 0; n < 2; n++) rows += cell(formCell(parts[n * 3 + p]), gloss ? verbGloss(v, t, n, p, voice) : '');
     rows += '</tr>';
   }
-  return '<div class="para"><div class="para-title">' + TENSE[t] + ' active indicative of <b>' + esc(v.lemma) + '</b>, “I ' + esc(v.en) + '”</div><div class="tbl-wrap"><table class="tbl"><thead><tr><th></th><th>Singular</th><th>Plural</th></tr></thead><tbody>' + rows + '</tbody></table></div></div>';
+  return '<div class="para"><div class="para-title">' + tvName(t, voice) + ' indicative of <b>' + esc(v.lemma) + '</b>, “I ' + esc(v.en) + '”</div><div class="tbl-wrap"><table class="tbl"><thead><tr><th></th><th>Singular</th><th>Plural</th></tr></thead><tbody>' + rows + '</tbody></table></div></div>';
 }
 // Contract verbs side by side; with steps, each cell also shows the vowels that merged (ε + ομεν)
-function cverbsTable(keys, steps, t) {
+function cverbsTable(keys, steps, t, voice) {
   t = t || 'pres';
   const vs = keys.map(k => P.cverbs[k]);
-  const base = t === 'impf' ? P.impfEndings : P.verbEndings;
+  const mp = voice === 'mp';
+  const base = t === 'impf' ? (mp ? P.impfMpEndings : P.impfEndings) : (mp ? P.mpEndings : P.verbEndings);
   let rows = '';
   [0, 1].forEach(n => {
     rows += '<tr class="grp"><th colspan="' + (vs.length + 1) + '">' + PN[1][n] + '</th></tr>';
     for (let p = 0; p < 3; p++) {
       const i = n * 3 + p;
-      rows += '<tr><th scope="row">' + PN[0][p] + '</th>' + vs.map(v => cell(formCell(verbParts(v, t)[i]), steps ? v.cv + ' + ' + base[i].replace('(ν)', '') : '')).join('') + '</tr>';
+      rows += '<tr><th scope="row">' + PN[0][p] + '</th>' + vs.map(v => cell(formCell(verbParts(v, t, voice)[i]), steps ? v.cv + ' + ' + bare(base[i]).replace('(ν)', '') : '')).join('') + '</tr>';
     }
   });
-  return '<div class="para"><div class="para-title">' + TENSE[t] + ' active indicative of contract verbs</div><div class="tbl-wrap"><table class="tbl"><thead><tr><th></th>' + vs.map(v => '<th>' + esc(v.lemma) + ' · ' + esc(v.en) + '</th>').join('') + '</tr></thead><tbody>' + rows + '</tbody></table></div></div>';
+  return '<div class="para"><div class="para-title">' + tvName(t, voice) + ' indicative of contract verbs</div><div class="tbl-wrap"><table class="tbl"><thead><tr><th></th>' + vs.map(v => '<th>' + esc(v.lemma) + ' · ' + esc(v.en) + '</th>').join('') + '</tr></thead><tbody>' + rows + '</tbody></table></div></div>';
 }
 // One verb in all three tenses, side by side
 function tensesTable(v, gloss) {
@@ -636,10 +654,10 @@ function egoSuTable() {
 }
 function renderPara(spec, opts) {
   opts = opts || {};
-  const [kind, arg, tense] = spec.split(':');
-  if (kind === 'verb') return verbTable(P.verbs[arg], opts.gloss, tense);
-  if (kind === 'cverb') return verbTable(P.cverbs[arg], opts.gloss, tense);
-  if (kind === 'cverbs') return cverbsTable(arg.split(','), opts.gloss, tense);
+  const [kind, arg, tense, voice] = spec.split(':');
+  if (kind === 'verb') return verbTable(P.verbs[arg], opts.gloss, tense, voice);
+  if (kind === 'cverb') return verbTable(P.cverbs[arg], opts.gloss, tense, voice);
+  if (kind === 'cverbs') return cverbsTable(arg.split(','), opts.gloss, tense, voice);
   if (kind === 'tenses') return tensesTable(P.verbs[arg] || P.cverbs[arg], opts.gloss);
   if (kind === 'eimi') return eimiTable(arg);
   if (kind === 'noun') return nounTable(arg, opts.art, opts.gloss);
@@ -652,7 +670,9 @@ function renderPara(spec, opts) {
 }
 const PARA_LIST = [
   ['Verbs', [['verb:luo', 'λύω, present active'], ['verb:luo:impf', 'λύω, imperfect active'], ['verb:luo:fut', 'λύω, future active'],
+    ['verb:luo:pres:mp', 'λύω, present middle/passive'], ['verb:luo:impf:mp', 'λύω, imperfect middle/passive'], ['verb:ginosko:fut:m', 'γινώσκω, future middle'],
     ['cverbs:poieo,agapao,pleroo', 'ποιέω · ἀγαπάω · πληρόω (contract verbs)'], ['cverbs:poieo,agapao,pleroo:impf', 'ποιέω · ἀγαπάω · πληρόω, imperfect'],
+    ['cverbs:poieo,agapao,pleroo:pres:mp', 'ποιέω · ἀγαπάω · πληρόω, present middle/passive'],
     ['eimi', 'εἰμί, present'], ['eimi:impf', 'εἰμί, imperfect'], ['eimi:fut', 'εἰμί, future']]],
   ['The article', [['article', 'ὁ, ἡ, τό']]],
   ['Nouns', [['noun:logos', 'λόγος (2nd decl. masc.)'], ['noun:ergon', 'ἔργον (2nd decl. neut.)'], ['nouns:arche,hemera,doxa', 'ἀρχή · ἡμέρα · δόξα (1st decl. fem.)'], ['noun:prophetes', 'προφήτης (1st decl. masc.)'],
@@ -662,7 +682,8 @@ const PARA_LIST = [
 ];
 const PARA_OPTS = { 'noun:logos': { art: 1 }, 'noun:ergon': { art: 1 }, 'nouns:arche,hemera,doxa': { art: 1 }, 'noun:prophetes': { art: 1 }, 'verb:luo': { gloss: 1 },
   'nouns:sarx,elpis': { art: 1 }, 'noun:onoma': { art: 1 }, 'nouns:pater,aner,gyne': { art: 1 }, 'cverbs:poieo,agapao,pleroo': { gloss: 1 },
-  'verb:luo:impf': { gloss: 1 }, 'verb:luo:fut': { gloss: 1 }, 'cverbs:poieo,agapao,pleroo:impf': { gloss: 1 } };
+  'verb:luo:impf': { gloss: 1 }, 'verb:luo:fut': { gloss: 1 }, 'cverbs:poieo,agapao,pleroo:impf': { gloss: 1 },
+  'verb:luo:pres:mp': { gloss: 1 }, 'verb:luo:impf:mp': { gloss: 1 }, 'verb:ginosko:fut:m': { gloss: 1 }, 'cverbs:poieo,agapao,pleroo:pres:mp': { gloss: 1 } };
 
 /* ================= Custom blocks ================= */
 function alphabetBlock(phonetic) {
@@ -963,7 +984,7 @@ function viewHome() {
       '<div><h3>2 · Learn the words</h3><p>Each lesson from 4 onward adds 8 to 16 high-frequency words. Short daily flashcard sessions space out your reviews so words stick.</p></div>' +
       '<div><h3>3 · Drill the forms</h3><p>Grammar review generates endless parsing and form-building questions from the paradigms you have learned, plus mixed review of past lessons.</p></div>' +
     '</div></section>' +
-    '<section><div class="sec-head"><span class="eyebrow">Coming in Unit 2</span><h2>The road ahead</h2></div><div class="ahead"><span>Middle &amp; passive voice</span><span>Aorist</span><span>Demonstratives &amp; relatives</span><span>Participles</span><span>Infinitives &amp; subjunctive</span></div></section>' +
+    '<section><div class="sec-head"><span class="eyebrow">Coming in Unit 2</span><h2>The road ahead</h2></div><div class="ahead"><span>Aorist</span><span>Demonstratives &amp; relatives</span><span>Participles</span><span>Infinitives &amp; subjunctive</span></div></section>' +
   '</div>';
 }
 
@@ -1007,8 +1028,8 @@ function vocabTable(words, showLesson) {
 }
 
 /* ---------- Vocabulary view ---------- */
-const VOCAB_LESSONS = [4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
-const VOCAB_NAMES = { 4: 'Verbs', 5: 'Nouns I', 6: 'Nouns II', 7: '1st decl.', 8: 'Adjectives', 9: 'Prepositions', 10: 'Pronouns', 11: '3rd decl.', 12: 'Contract verbs', 13: 'Imperfect & future' };
+const VOCAB_LESSONS = [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
+const VOCAB_NAMES = { 4: 'Verbs', 5: 'Nouns I', 6: 'Nouns II', 7: '1st decl.', 8: 'Adjectives', 9: 'Prepositions', 10: 'Pronouns', 11: '3rd decl.', 12: 'Contract verbs', 13: 'Imperfect & future', 14: 'Middle & passive' };
 const ui = { vocabTab: 'cards', vocabSel: null, dir: 'gk', reviewTab: 'parse', parseSets: null, formSets: null, paraPick: 'verb:luo', alphaTab: 'match', alphaModes: ['names', 'sounds'] };
 try { const u = JSON.parse(localStorage.getItem(LS_KEY + '-ui') || 'null'); if (u) Object.assign(ui, u); } catch (e) { /* ignore */ }
 const saveUi = () => { try { localStorage.setItem(LS_KEY + '-ui', JSON.stringify(ui)); } catch (e) { /* ignore */ } };
@@ -1134,15 +1155,17 @@ function wordList(pane, words) {
 const SETS = [
   ['verbs', 'Present verbs', 4], ['eimi', 'εἰμί', 10], ['article', 'Article', 7], ['n2', '2nd declension', 6],
   ['n1', '1st declension', 7], ['adj', 'Adjectives', 8], ['pron', 'Pronouns', 10], ['n3', '3rd declension', 11],
-  ['cverbs', 'Contract verbs', 12], ['tenses', 'Imperfect & future', 13]
+  ['cverbs', 'Contract verbs', 12], ['tenses', 'Imperfect & future', 13], ['voice', 'Middle & passive', 14]
 ];
 const CASES = ['nom', 'gen', 'dat', 'acc'], CASE_LONG = { nom: 'nominative', gen: 'genitive', dat: 'dative', acc: 'accusative' };
 const G_LONG = { m: 'masculine', f: 'feminine', n: 'neuter' }, N_LONG = { sg: 'singular', pl: 'plural' }, PER_LONG = { 1: '1st person', 2: '2nd person', 3: '3rd person' };
 const T_LONG = { pres: 'present', impf: 'imperfect', fut: 'future' };
+// A middle/passive form ('mp') is correct whether the learner picks Middle or Passive
+const fits = (pv, sv) => String(pv) === sv || (pv === 'mp' && (sv === 'm' || sv === 'p'));
 function defaultSets() { const reached = Math.max(4, ...C.lessons.filter(l => lessonState(l.n).seen).map(l => l.n), 0); const s = SETS.filter(x => x[2] <= reached).map(x => x[0]); return s.length ? s : ['verbs']; }
 
 function buildPool(sets) {
-  const out = []; // {form, lemma, gloss, kind:'pn'|'tpn'|'cn'|'cng', parses:[]}
+  const out = []; // {form, lemma, gloss, kind:'pn'|'tpn'|'tvpn'|'cn'|'cng', parses:[]}
   const group = (lemma, gloss, kind, entries) => {
     const m = new Map();
     entries.forEach(([form, parse]) => { form = nfc(form); if (!m.has(form)) m.set(form, []); m.get(form).push(parse); });
@@ -1176,6 +1199,18 @@ function buildPool(sets) {
     [['pres', P.eimi], ['impf', P.eimi.impf], ['fut', P.eimi.fut]].forEach(([t, src]) => src.sg.concat(src.pl).forEach((f, i) => e.push([f.replace('(ν)', 'ν'), Object.assign({ t }, pn(i))])));
     group('εἰμί', 'be', 'tpn', e);
   }
+  // Active and middle/passive of every tense, so voice has to be recognized too (εἰμί has no voice)
+  if (sets.includes('voice')) {
+    const pn = i => ({ p: (i % 3) + 1, n: i < 3 ? 'sg' : 'pl' });
+    Object.values(P.verbs).concat(Object.values(P.cverbs)).forEach(v => {
+      const e = [];
+      const add = (t, voice) => verbForms(v, t, voice).forEach((f, i) => e.push([f.replace('(ν)', 'ν'), Object.assign({ t, v: voice }, pn(i))]));
+      ['pres', 'impf'].forEach(t => { add(t, 'act'); add(t, 'mp'); });
+      if (v.fut) add('fut', 'act');
+      if (hasFutM(v)) add('fut', 'm');
+      group(v.lemma, v.en, 'tvpn', e);
+    });
+  }
   const gEntries = src => { const e = []; ['m', 'f', 'n'].forEach(g => ['sg', 'pl'].forEach(n => src[g][n].forEach((f, c) => e.push([f, { c: CASES[c], n, g }])))); return e; };
   if (sets.includes('article')) group('ὁ, ἡ, τό', 'the', 'cng', gEntries(P.article));
   const nounSet = cls => Object.values(P.nouns).filter(n => cls.includes(n.cls)).forEach(n => {
@@ -1192,7 +1227,8 @@ function buildPool(sets) {
   }
   return out;
 }
-const parseText = (p, kind) => kind === 'tpn' ? T_LONG[p.t] + ' ' + PER_LONG[p.p] + ' ' + N_LONG[p.n] : kind === 'pn' ? PER_LONG[p.p] + ' ' + N_LONG[p.n] : CASE_LONG[p.c] + ' ' + N_LONG[p.n] + (kind === 'cng' ? ' ' + G_LONG[p.g] : '');
+const parseText = (p, kind) => kind === 'tvpn' ? T_LONG[p.t] + ' ' + VOICE[p.v] + ' ' + PER_LONG[p.p] + ' ' + N_LONG[p.n] :
+  kind === 'tpn' ? T_LONG[p.t] + ' ' + PER_LONG[p.p] + ' ' + N_LONG[p.n] : kind === 'pn' ? PER_LONG[p.p] + ' ' + N_LONG[p.n] : CASE_LONG[p.c] + ' ' + N_LONG[p.n] + (kind === 'cng' ? ' ' + G_LONG[p.g] : '');
 
 function viewReview() {
   if (!ui.parseSets) ui.parseSets = defaultSets();
@@ -1233,7 +1269,9 @@ function parseDrill(pane) {
     let it; do { it = pick(pool); } while (pool.length > 1 && last && it.form === last.form && it.lemma === last.lemma);
     last = it;
     const pnGroups = [['p', 'Person', [['1', '1st'], ['2', '2nd'], ['3', '3rd']]], ['n', 'Number', [['sg', 'Singular'], ['pl', 'Plural']]]];
-    const groups = it.kind === 'tpn' ? [['t', 'Tense', [['pres', 'Present'], ['impf', 'Imperfect'], ['fut', 'Future']]]].concat(pnGroups)
+    const tGroup = ['t', 'Tense', [['pres', 'Present'], ['impf', 'Imperfect'], ['fut', 'Future']]];
+    const groups = it.kind === 'tvpn' ? [tGroup, ['v', 'Voice', [['act', 'Active'], ['m', 'Middle'], ['p', 'Passive']]]].concat(pnGroups)
+      : it.kind === 'tpn' ? [tGroup].concat(pnGroups)
       : it.kind === 'pn' ? pnGroups
       : [['c', 'Case', CASES.map(c => [c, CASE_LONG[c].replace(/^./, m => m.toUpperCase())])], ['n', 'Number', [['sg', 'Singular'], ['pl', 'Plural']]]].concat(it.kind === 'cng' ? [['g', 'Gender', [['m', 'Masculine'], ['f', 'Feminine'], ['n', 'Neuter']]]] : []);
     const outer = $('#pd', pane); outer.innerHTML = '';
@@ -1254,7 +1292,7 @@ function parseDrill(pane) {
     });
     const check = () => {
       if (done || groups.some(gr => !sel[gr[0]])) return; done = true;
-      const ok = it.parses.some(p => groups.every(gr => String(p[gr[0]]) === sel[gr[0]]));
+      const ok = it.parses.some(p => groups.every(gr => fits(p[gr[0]], sel[gr[0]])));
       tally.total++; if (ok) { tally.right++; tally.streak++; } else tally.streak = 0;
       const fb = $('.fb', host); fb.className = 'fb ' + (ok ? 'ok' : 'bad');
       const all = it.parses.map(p => parseText(p, it.kind));

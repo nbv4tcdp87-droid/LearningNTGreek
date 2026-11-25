@@ -370,4 +370,137 @@ window.COURSE = window.COURSE || {};
     ]
   });
 
+  /* ============ LESSON 14 ============ */
+  L.push({
+    n: 14, title: 'The Middle and Passive Voice', gk: 'λύομαι',
+    blurb: 'When the subject is acted on, or acts for itself: the middle and passive, deponent verbs like ἔρχομαι, and the future middle.',
+    goals: [
+      'Tell active, middle and passive apart',
+      'Form the present and imperfect middle/passive of λύω',
+      'Read deponent verbs like ἔρχομαι and γίνομαι',
+      'Recognize the future middle, as in γνώσομαι and ἔσομαι'
+    ],
+    sections: [
+      { h: 'Active, middle and passive', html: `
+        <p>Every verb you have learned so far has been <b>active</b>: the subject does the action. Greek has two more <b>voices</b>.</p>
+        <ul>
+          <li><b>Active:</b> the subject acts. λύω, “I loose.”</li>
+          <li><b>Passive:</b> the subject is acted on. λύομαι, “I am loosed.”</li>
+          <li><b>Middle:</b> the subject acts, and is closely involved in the action: for itself, on itself or in its own interest. λύομαι can also mean “I loose for myself,” “I set free for myself.”</li>
+        </ul>
+        <p>English has active and passive, but no middle. You will often translate a middle as a plain active, or with “myself,” “for myself.”</p>
+        <p>In the present and the imperfect, the middle and the passive have the <b>same forms</b>. Grammars call them “middle/passive,” and the context tells you which is meant.</p>
+        <aside class="callout latin"><b>Latin parallel.</b> Latin has an active and a passive (<em>amō</em>, “I love”; <em>amor</em>, “I am loved”), but no middle. Its deponent verbs, like <em>sequor</em>, “I follow,” and <em>loquor</em>, “I speak,” are passive in form and active in meaning. Greek has verbs like these too; they come in section 4.</aside>` },
+      { h: 'The present middle/passive: λύομαι', html: `
+        <p>The middle/passive has its own set of endings. Compare them with the active ones you know:</p>
+        <div class="tbl-wrap"><table class="tbl">
+          <thead><tr><th></th><th>Active</th><th>Middle/passive</th></tr></thead>
+          <tbody>
+            <tr><td>1st sg.</td><td>-ω</td><td>-ομαι</td></tr>
+            <tr><td>2nd sg.</td><td>-εις</td><td>-ῃ</td></tr>
+            <tr><td>3rd sg.</td><td>-ει</td><td>-εται</td></tr>
+            <tr><td>1st pl.</td><td>-ομεν</td><td>-ομεθα</td></tr>
+            <tr><td>2nd pl.</td><td>-ετε</td><td>-εσθε</td></tr>
+            <tr><td>3rd pl.</td><td>-ουσι(ν)</td><td>-ονται</td></tr>
+          </tbody>
+        </table></div>
+        <div data-para="verb:luo:pres:mp" data-gloss="1"></div>
+        <ul>
+          <li><b>The 2nd person singular -ῃ</b> is short for an older -εσαι: the σ dropped out and the vowels merged. Don’t confuse it with the iota subscript of a dative.</li>
+          <li><b>The accent moves</b> in the longer 1st person plural: λυόμεθα, because an accent can stand no further back than the third syllable from the end.</li>
+          <li><b>A σθ</b> marks the 2nd person plural: λύεσθε. You will meet σθ again in the infinitive.</li>
+        </ul>
+        <p>The glosses in the table are passive. As a middle, λύεται would mean “he looses (for himself).”</p>` },
+      { h: 'Middle or passive?', html: `
+        <p>A passive verb often says who did the action, or with what:</p>
+        <ul>
+          <li><b>The agent</b>, a person, is ὑπό with the genitive (Lesson 9): ὁ λόγος λέγεται ὑπὸ τοῦ προφήτου, “the word is spoken by the prophet.”</li>
+          <li><b>The means</b>, a thing, is the dative, often with ἐν: βαπτίζονται ἐν ὕδατι, “they are baptized with water.”</li>
+        </ul>
+        <p>When there is no agent and the sense allows it, consider the middle. A few verbs change meaning in the middle, and the dictionary lists both:</p>
+        <ul>
+          <li>ἄρχω, “I rule” (with the genitive) → ἄρχομαι, “I begin”</li>
+          <li>πείθω, “I persuade” → πείθομαι, “I obey, trust” (with the dative), or as a passive, “I am persuaded”</li>
+        </ul>
+        <p>In practice, read the sentence first. If the subject is clearly on the receiving end, the verb is passive. If the subject is doing something, it is middle.</p>` },
+      { h: 'Deponent verbs', html: `
+        <p>Some of the most common verbs in the New Testament have middle/passive forms but an active meaning. They are called <b>deponent</b> verbs, and the dictionary lists them with the -ομαι ending:</p>
+        <ul>
+          <li>ἔρχομαι, “I come, go”: ἔρχεται, “he comes”</li>
+          <li>γίνομαι, “I become, happen”: γίνεται, “it happens”</li>
+          <li>πορεύομαι, “I go”: πορεύονται, “they go”</li>
+          <li>ἀποκρίνομαι, “I answer”; προσεύχομαι, “I pray”; δέχομαι, “I receive”</li>
+        </ul>
+        <p>Translate them as active verbs. There is no “I am come-d.” Many grammarians now prefer to call them simply middle verbs: coming, going, becoming and praying all involve the subject closely.</p>
+        <p>Prepositions combine with ἔρχομαι to make some very common verbs: ἐξέρχομαι, “I go out”; εἰσέρχομαι, “I go in”; ἀπέρχομαι, “I go away.”</p>
+        <p>One deponent adds its endings without the linking vowel: δύναμαι, “I can,” δύνασαι, δύναται, δυνάμεθα, δύνασθε, δύνανται. It is usually followed by an infinitive, “I can do …,” which comes later in this unit.</p>` },
+      { h: 'The imperfect middle/passive: ἐλυόμην', html: `
+        <p>The imperfect middle/passive takes the augment and its own endings: -ομην, -ου, -ετο, -ομεθα, -εσθε, -οντο.</p>
+        <div data-para="verb:luo:impf:mp" data-gloss="1"></div>
+        <p>Compare the present: λύεται, “he is loosed”; ἐλύετο, “he was being loosed.” The endings of the imperfect (-ετο, -οντο) end in ο where the present (-εται, -ονται) ends in αι.</p>
+        <p>Deponents have imperfects too: ἤρχετο, “he was coming”; ἐγίνετο, “it was happening”; ἐπορεύοντο, “they were going.” In ἤρχετο the augment lengthens ε to η, as in Lesson 13.</p>` },
+      { h: 'Contract verbs', html: `
+        <p>Contract verbs take the middle/passive endings, and the vowels merge by the rules of Lesson 12:</p>
+        <div data-para="cverbs:poieo,agapao,pleroo:pres:mp" data-gloss="1"></div>
+        <p>πληροῦται means “it is fulfilled,” and ἀγαπᾶται “he is loved.” One contract verb is deponent and very common: φοβέομαι, “I fear, am afraid.” φοβοῦμαι is “I am afraid,” φοβεῖται “he is afraid.”</p>` },
+      { h: 'The future middle', html: `
+        <p>The future middle adds σ, then the present middle/passive endings: λύσομαι, “I will loose for myself.”</p>
+        <p>The future middle matters most for a group of very common verbs whose future is <b>middle in form but active in meaning</b>, like a deponent. Lesson 13 mentioned some of them. Here is γινώσκω:</p>
+        <div data-para="verb:ginosko:fut:m" data-gloss="1"></div>
+        <p>The future stem is γνω-, without the γι- and the -σκ- of the present. Learn these futures with their verbs:</p>
+        <div class="tbl-wrap"><table class="tbl">
+          <thead><tr><th>Present</th><th>Future</th><th>Meaning</th></tr></thead>
+          <tbody>
+            <tr><td>εἰμί</td><td>ἔσομαι</td><td>I will be</td></tr>
+            <tr><td>γινώσκω</td><td>γνώσομαι</td><td>I will know</td></tr>
+            <tr><td>λαμβάνω</td><td>λήμψομαι</td><td>I will take, receive</td></tr>
+            <tr><td>ὁράω</td><td>ὄψομαι</td><td>I will see</td></tr>
+            <tr><td>ἔρχομαι</td><td>ἐλεύσομαι</td><td>I will come</td></tr>
+            <tr><td>γίνομαι</td><td>γενήσομαι</td><td>I will become</td></tr>
+            <tr><td>ζάω</td><td>ζήσομαι</td><td>I will live</td></tr>
+          </tbody>
+        </table></div>
+        <p>Now you can see why the future of εἰμί in Lesson 13 looked different: ἔσομαι is a future middle.</p>
+        <p>The future <b>passive</b> is formed in another way, from the aorist passive: λυθήσομαι, “I will be loosed.” It comes after the aorist.</p>` }
+    ],
+    texts: [
+      { ref: 'Gen 1:2', src: 'LXX', w: [['ἡ', 'the'], ['δὲ', 'but, and'], ['γῆ', 'earth'], ['ἦν', 'was'], ['ἀόρατος', 'invisible, unseen'], ['καὶ', 'and'], ['ἀκατασκεύαστος,', 'unformed'], ['καὶ', 'and'], ['σκότος', 'darkness'], ['ἐπάνω', 'over, above'], ['τῆς', 'the'], ['ἀβύσσου,', 'abyss, deep'], ['καὶ', 'and'], ['πνεῦμα', 'Spirit, wind'], ['θεοῦ', 'of God'], ['ἐπεφέρετο', 'was moving, was borne'], ['ἐπάνω', 'over'], ['τοῦ', 'the'], ['ὕδατος.', 'water']],
+        en: 'But the earth was invisible and unformed, and darkness was over the abyss, and the Spirit of God was moving over the water.',
+        notes: ['ἐπεφέρετο is the imperfect middle/passive of ἐπιφέρω, ἐπί + φέρω, “bring upon.” The augment comes after the preposition, which drops its ι: ἐπ-ε-φέρετο.', 'ἦν, “was,” is the imperfect of εἰμί (Lesson 13). The second clause leaves it out: “and darkness (was) over the abyss.”', 'ὕδατος is the genitive of ὕδωρ, ὕδατος, τό, “water,” a third-declension noun like σῶμα.', 'This verse follows Gen 1:1, which you read in Lesson 3. The Church sees in the Spirit moving over the waters a sign of baptism, and the blessing of the water at the Easter Vigil recalls it (Catechism 1218).'] },
+      { ref: 'Mark 1:5', src: 'NT', w: [['καὶ', 'and'], ['ἐξεπορεύετο', 'was going out'], ['πρὸς', 'to'], ['αὐτὸν', 'him'], ['πᾶσα', 'all, the whole'], ['ἡ', 'the'], ['Ἰουδαία', 'Judean'], ['χώρα', 'region, country'], ['καὶ', 'and'], ['οἱ', 'the'], ['Ἱεροσολυμῖται', 'people of Jerusalem'], ['πάντες,', 'all'], ['καὶ', 'and'], ['ἐβαπτίζοντο', 'they were being baptized'], ['ὑπ᾽', 'by'], ['αὐτοῦ', 'him'], ['ἐν', 'in'], ['τῷ', 'the'], ['Ἰορδάνῃ', 'Jordan'], ['ποταμῷ', 'river'], ['ἐξομολογούμενοι', 'confessing'], ['τὰς', 'the'], ['ἁμαρτίας', 'sins'], ['αὐτῶν.', 'their']],
+        en: 'And the whole Judean countryside and all the people of Jerusalem were going out to him, and they were being baptized by him in the Jordan River, confessing their sins.',
+        notes: ['ἐξεπορεύετο is the imperfect of the deponent ἐκπορεύομαι, “go out.” ἐκ becomes ἐξ before the augment. Its subject, πᾶσα ἡ Ἰουδαία χώρα, is singular.', 'ἐβαπτίζοντο is imperfect passive: “they were being baptized.” ὑπ᾽ αὐτοῦ, “by him,” names the agent. ὑπό becomes ὑπ᾽ before a vowel.', 'ἐξομολογούμενοι, “confessing,” is a middle participle. Participles come later in this unit.', 'The imperfects show a stream of people over time, not a single event.'] },
+      { ref: 'John 14:6', src: 'NT', w: [['οὐδεὶς', 'no one'], ['ἔρχεται', 'comes'], ['πρὸς', 'to'], ['τὸν', 'the'], ['πατέρα', 'Father'], ['εἰ', 'if'], ['μὴ', 'not'], ['δι᾽', 'through'], ['ἐμοῦ.', 'me']],
+        en: 'No one comes to the Father except through me.',
+        notes: ['ἔρχεται is middle in form but active in meaning: “comes.” ἔρχομαι is a deponent verb.', 'εἰ μή, literally “if not,” means “except.”', 'δι᾽ ἐμοῦ: διά with the genitive means “through” (Lesson 9). ἐμοῦ is the emphatic form of μου.', 'You read the first half of this verse in Lesson 7: ἐγώ εἰμι ἡ ὁδὸς καὶ ἡ ἀλήθεια καὶ ἡ ζωή.'] },
+      { ref: '1 Cor 15:42', src: 'NT', w: [['Οὕτως', 'so'], ['καὶ', 'also'], ['ἡ', 'the'], ['ἀνάστασις', 'resurrection'], ['τῶν', 'of the'], ['νεκρῶν.', 'dead'], ['σπείρεται', 'it is sown'], ['ἐν', 'in'], ['φθορᾷ,', 'decay, corruption'], ['ἐγείρεται', 'it is raised'], ['ἐν', 'in'], ['ἀφθαρσίᾳ·', 'incorruption']],
+        en: 'So it is with the resurrection of the dead. It is sown in corruption; it is raised in incorruption.',
+        notes: ['σπείρεται and ἐγείρεται are present passive: “it is sown,” “it is raised.” The subject is the body, as in the verses around it.', 'ἐγείρω, “I raise,” is in Lesson 13’s vocabulary. Its passive often means “rise.”', 'ἀνάστασις, “resurrection,” is a third-declension noun like πίστις.', 'Paul compares the body to a seed: it is buried and decays, and God raises it imperishable (Catechism 999).'] },
+      { ref: 'Ps 22:6', alt: '(23:6)', src: 'LXX', w: [['καὶ', 'and'], ['τὸ', 'the'], ['ἔλεός', 'mercy'], ['σου', 'your'], ['καταδιώξεταί', 'will pursue'], ['με', 'me'], ['πάσας', 'all'], ['τὰς', 'the'], ['ἡμέρας', 'days'], ['τῆς', 'of the'], ['ζωῆς', 'life'], ['μου,', 'my'], ['καὶ', 'and'], ['τὸ', 'the'], ['κατοικεῖν', 'dwelling'], ['με', 'my (lit. me)'], ['ἐν', 'in'], ['οἴκῳ', 'the house'], ['κυρίου', 'of the Lord'], ['εἰς', 'for'], ['μακρότητα', 'length'], ['ἡμερῶν.', 'of days']],
+        en: 'And your mercy will pursue me all the days of my life, and my dwelling will be in the house of the Lord for length of days.',
+        notes: ['καταδιώξεται is the future middle of καταδιώκω, κατά + διώκω (Lesson 13), “pursue closely.” The form is middle, but the meaning is active.', 'καταδιώξεταί με: an enclitic like με can add a second accent to the word before it.', 'τὸ κατοικεῖν με, “my dwelling,” is an infinitive used as a noun. Infinitives come later in this unit.', 'This is the last verse of the psalm that begins Κύριος ποιμαίνει με (Lesson 4). The Hebrew verb here also means “pursue,” though many English versions soften it to “follow.”'] },
+      { ref: 'Matt 5:8', src: 'NT', w: [['μακάριοι', 'blessed'], ['οἱ', 'the'], ['καθαροὶ', 'pure'], ['τῇ', 'in'], ['καρδίᾳ,', 'heart'], ['ὅτι', 'for, because'], ['αὐτοὶ', 'they'], ['τὸν', 'the'], ['θεὸν', 'God'], ['ὄψονται.', 'will see']],
+        en: 'Blessed are the pure in heart, for they will see God.',
+        notes: ['ὄψονται is the future middle of ὁράω, “I see.” Its future comes from another stem, ὀπ-: ὀπ + σ gives ὄψ-, as in “optic.”', 'μακάριοι οἱ καθαροί has no verb. Supply “are.”', 'τῇ καρδίᾳ, “in heart,” is a dative that tells in what way they are pure.', 'This is the sixth Beatitude (Catechism 2518). The Church calls the sight of God in heaven the beatific vision (Catechism 1028).'] }
+    ],
+    ex: [
+      { t: 'mc', q: 'In the passive voice, the subject…', o: ['is acted on', 'does the action', 'acts for itself', 'is always plural'], a: 0, x: 'λύομαι, “I am loosed”: the subject receives the action. A middle subject acts, for or on itself.' },
+      { t: 'mc', q: 'Parse <span class="big">λύεται</span>.', o: ['present middle/passive, 3rd person singular', 'present active, 3rd person singular', 'imperfect middle/passive, 3rd person singular', 'future middle, 3rd person singular'], a: 0, x: 'λύ + -εται. The active is λύει, the imperfect ἐλύετο and the future middle λύσεται.' },
+      { t: 'mc', q: 'Which ending is the 2nd person singular, present middle/passive?', o: ['-ῃ', '-εις', '-εσθε', '-ου'], a: 0, x: 'λύῃ, “you are loosed.” -εις is active, -εσθε plural, and -ου the imperfect (ἐλύου).' },
+      { t: 'mc', q: 'Translate <span class="big">γράφεται</span>.', o: ['it is written', 'he writes', 'he was writing', 'he will write'], a: 0, x: 'A present passive: γράφ + -εται. “He writes” would be γράφει.' },
+      { t: 'mc', q: 'Parse <span class="big">ἐλυόμεθα</span>.', o: ['imperfect middle/passive, 1st person plural', 'present middle/passive, 1st person plural', 'imperfect active, 1st person plural', 'future middle, 1st person plural'], a: 0, x: 'The augment ἐ- makes it imperfect. The present is λυόμεθα; the imperfect active is ἐλύομεν.' },
+      { t: 'mc', q: 'What is the 3rd person plural, imperfect middle/passive, of <span class="big">λύω</span>?', o: ['ἐλύοντο', 'λύονται', 'ἔλυον', 'ἐλύονται'], a: 0, x: 'The imperfect ending is -οντο. λύονται is the present; ἔλυον is the imperfect active.' },
+      { t: 'mc', q: 'What is a deponent verb?', o: ['A verb with middle/passive forms but an active meaning', 'A verb with no present tense', 'A verb that always takes a dative', 'A verb with only active forms'], a: 0, x: 'ἔρχομαι, “I come,” looks like a passive but means something active.' },
+      { t: 'mc', q: 'Translate <span class="big">ἔρχεται</span>.', o: ['he comes, is coming', 'he is brought', 'he came', 'he will come'], a: 0, x: 'ἔρχομαι is deponent, so translate it as active. “He will come” would be ἐλεύσεται.' },
+      { t: 'mc', q: 'In <span class="big">ὁ λόγος λέγεται ὑπὸ τοῦ προφήτου</span>, what does ὑπὸ τοῦ προφήτου tell you?', o: ['who does the action: “by the prophet”', 'where the action happens', 'whom the word is spoken to', 'the object of the verb'], a: 0, x: 'With a passive verb, ὑπό and the genitive name the agent.' },
+      { t: 'mc', q: 'Parse <span class="big">γνώσεται</span>.', o: ['future middle, 3rd person singular of γινώσκω', 'present middle/passive, 3rd person singular of γινώσκω', 'future active, 3rd person singular of γινώσκω', 'imperfect middle/passive, 3rd person singular of γινώσκω'], a: 0, x: 'γινώσκω has a middle future with an active meaning: γνώσεται, “he will know.”' },
+      { t: 'mc', q: 'Which form means “he is made” (or “he makes for himself”)?', o: ['ποιεῖται', 'ποιεῖ', 'ποιοῦνται', 'ἐποιεῖτο'], a: 0, x: 'ε + εται gives εῖται. ποιεῖ is active, ποιοῦνται plural and ἐποιεῖτο imperfect.' },
+      { t: 'mc', q: 'What does the middle <span class="big">ἄρχομαι</span> mean?', o: ['I begin', 'I rule', 'I will rule', 'I answer'], a: 0, x: 'ἄρχω, “I rule,” changes meaning in the middle: ἄρχομαι, “I begin.”' },
+      { t: 'mc', q: 'Why does the future of εἰμί end in -ομαι (ἔσομαι)?', o: ['εἰμί has a middle future', 'It is passive: “I will be made”', 'It is an imperfect', 'It is a contract verb'], a: 0, x: 'Like γνώσομαι and ὄψομαι, ἔσομαι is a future middle with an active meaning.' },
+      { t: 'match', q: 'Match each verb to its meaning.', pairs: [['ἔρχομαι', 'I come, go'], ['γίνομαι', 'I become'], ['πορεύομαι', 'I go, proceed'], ['ἀποκρίνομαι', 'I answer'], ['προσεύχομαι', 'I pray'], ['δύναμαι', 'I can']] },
+      { t: 'self', q: 'Translate:', gk: 'οἱ μαθηταὶ διδάσκονται ὑπὸ τοῦ κυρίου.', a: 'The disciples are taught by the Lord.', x: 'διδάσκονται is present passive, 3rd person plural. ὑπό and the genitive give the agent.' },
+      { t: 'self', q: 'Translate:', gk: 'ὁ δὲ δίκαιος ἐκ πίστεως ζήσεται.', a: 'But the righteous one will live by faith.', x: 'ζήσεται is the future middle of ζάω, with an active meaning. πίστεως is the genitive of πίστις. Paul quotes this line of Habakkuk 2:4 in Rom 1:17 and Gal 3:11.' }
+    ]
+  });
+
 })(window.COURSE);

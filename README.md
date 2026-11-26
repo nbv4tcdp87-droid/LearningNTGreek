@@ -4,7 +4,7 @@ A free beginner's course in **Septuagint and New Testament Greek**, starting fro
 
 Unit 1 has ten lessons, from the alphabet to εἰμί and the personal pronouns. Unit 2 is under way: Lesson 11 covers the third declension, Lesson 12 contract verbs, Lesson 13 the imperfect and future, and Lesson 14 the middle and passive voice. Each lesson includes explanations, paradigm tables, verses from the LXX and NT with tap-for-meaning glosses, and exercises. The site also has:
 
-- **Alphabet:** matching rounds that pair each letter with its name and with its sound spelled in phonetic English; a quick quiz in five versions that rotate on each visit, each asking one question about every letter; and a chart with an example word for each letter, where you can tap a letter to hear its name.
+- **Alphabet:** matching rounds that pair each letter with its name and with its sound spelled in phonetic English; a quick quiz in five versions that rotate on each visit, each asking one question about every letter; and a chart with an example word for each letter, where you can tap a letter to hear its name and a speaker button to hear the word.
 - **Vocabulary:** 154 high-frequency words with spaced-repetition flashcards, a quick quiz and a searchable word list.
 - **Grammar review:** parsing and form-building drills, paradigm recall and mixed lesson review.
 - **Paradigms:** every table in one place.
@@ -24,7 +24,7 @@ Progress (lesson scores and flashcard schedules) is saved in each visitor's brow
 | `data-lessons-1.js` | Lessons 1–5 |
 | `data-lessons-2.js` | Lessons 6–10 |
 | `data-lessons-3.js` | Unit 2, from Lesson 11 |
-| `audio/` | Recordings of the 24 letter names (`alpha.m4a` to `omega.m4a`) |
+| `audio/` | Recordings of the 24 letter names (`alpha.m4a` to `omega.m4a`) and 22 example words (`alpha-word.m4a` …) |
 
 The site is plain HTML and JavaScript with no build step. Fonts (Cardo, Gentium Book Plus, Figtree) load from Google Fonts.
 
@@ -45,4 +45,4 @@ Lessons are plain objects in the `data-lessons-*.js` files, each with `sections`
 
 LXX quotations follow Rahlfs' edition; NT quotations follow the standard critical text (NA28 / SBLGNT). Word frequencies are approximate NT counts. English translations of verses are original to this course.
 
-The letter-name recordings in `audio/` are by Angela of [Alpha with Angela](https://freegreek.online/), cut from the video “Biblical Greek - How to write the Greek Alphabet - Free Greek” ([Lets.Church](https://lets.church/media/66zXgAQyn6hUTbWQ3Tsfmn)). Alpha with Angela publishes its resources under [CC BY-SA](https://creativecommons.org/licenses/by-sa/4.0/). The clips were trimmed, given short fades and evened in volume, and they are shared under the same license.
+The recordings in `audio/` are by Angela of [Alpha with Angela](https://freegreek.online/). The letter names are cut from “Biblical Greek - How to write the Greek Alphabet - Free Greek” ([Lets.Church](https://lets.church/media/66zXgAQyn6hUTbWQ3Tsfmn)), and the example words from her alphabet lessons: [Lesson 9](https://lets.church/media/uZM8MC7KprViZornAaCzAc), [Lesson 16](https://lets.church/media/qV5FDX9D6EbC5vU1xKBkGY) and [Lesson 18](https://lets.church/media/vjp5ubSiHeg4En1ZZ8jUPE). Alpha with Angela publishes its resources under [CC BY-SA](https://creativecommons.org/licenses/by-sa/4.0/). The clips were trimmed, given short fades and evened in volume, and they are shared under the same license.

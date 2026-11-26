@@ -32,15 +32,17 @@ window.COURSE = window.COURSE || {};
     ['Ψ', 'ψ', 'psi', 'ψῖ', 'ps', 'ps as in lips', 'ps', 'lips'],
     ['Ω', 'ω', 'omega', 'ὦ μέγα', 'ō', 'o as in tone', 'oh', 'tone']
   ];
-  // One example word per letter, in the same order: [Greek, transliteration, meaning].
-  // Letter-name audio is audio/<English name>.m4a (audio/alpha.m4a). Example words have no audio yet.
+  // One example word per letter, in the same order: [Greek, transliteration, meaning, recorded?].
+  // Letter-name audio is audio/<English name>.m4a (audio/alpha.m4a); a word marked 1 also has
+  // audio/<English name>-word.m4a. The words are the ones Angela uses in Alpha with Angela's alphabet
+  // lessons (9, 16 and 18). ε and υ have only sound drills there, so their words have no recording.
   C.alphaWords = [
-    ['ἀγάπη', 'agapē', 'love'], ['βλέπω', 'blepō', 'I see'], ['γράφω', 'graphō', 'I write'], ['δόξα', 'doxa', 'glory'],
-    ['ἐγώ', 'egō', 'I'], ['ζωή', 'zōē', 'life'], ['ἡμέρα', 'hēmera', 'day'], ['θεός', 'theos', 'God'],
-    ['Ἰησοῦς', 'Iēsous', 'Jesus'], ['κύριος', 'kyrios', 'Lord'], ['λόγος', 'logos', 'word'], ['μαθητής', 'mathētēs', 'disciple'],
-    ['νόμος', 'nomos', 'law'], ['ξένος', 'xenos', 'stranger'], ['ὁδός', 'hodos', 'way'], ['πατήρ', 'patēr', 'father'],
-    ['ῥῆμα', 'rhēma', 'saying'], ['σάρξ', 'sarx', 'flesh'], ['τέκνον', 'teknon', 'child'], ['ὕδωρ', 'hydōr', 'water'],
-    ['φῶς', 'phōs', 'light'], ['Χριστός', 'Christos', 'Christ'], ['ψυχή', 'psychē', 'soul'], ['ὥρα', 'hōra', 'hour']
+    ['ἄγγελος', 'angelos', 'angel, messenger', 1], ['βιβλίον', 'biblion', 'book', 1], ['γῆ', 'gē', 'earth', 1], ['δένδρον', 'dendron', 'tree', 1],
+    ['ἐγώ', 'egō', 'I'], ['ζῷον', 'zōon', 'animal', 1], ['ἥλιος', 'hēlios', 'sun', 1], ['θεός', 'theos', 'God', 1],
+    ['ἵππος', 'hippos', 'horse', 1], ['κακός', 'kakos', 'bad', 1], ['λίθος', 'lithos', 'stone', 1], ['μέγας', 'megas', 'great, large', 1],
+    ['ναί', 'nai', 'yes', 1], ['ξύλον', 'xylon', 'wood, tree', 1], ['ὄνος', 'onos', 'donkey', 1], ['πέντε', 'pente', 'five', 1],
+    ['ῥίς', 'rhis', 'nose', 1], ['στόμα', 'stoma', 'mouth', 1], ['τρία', 'tria', 'three', 1], ['ὕδωρ', 'hydōr', 'water'],
+    ['φῶς', 'phōs', 'light', 1], ['χείρ', 'cheir', 'hand', 1], ['ψῦχος', 'psychos', 'cold', 1], ['ὥρα', 'hōra', 'hour', 1]
   ];
 
   C.greekNumerals = ['', 'αʹ', 'βʹ', 'γʹ', 'δʹ', 'εʹ', 'ϛʹ', 'ζʹ', 'ηʹ', 'θʹ', 'ιʹ',

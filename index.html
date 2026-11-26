@@ -239,6 +239,10 @@ textarea { min-height: 72px; resize: vertical; }
 .alpha button.lt .ico { display: inline-flex; color: var(--muted); }
 .alpha button.lt.playing .ico { color: var(--accent); }
 .alpha .ex { font-size: .8rem; line-height: 1.3; margin-top: 4px; }
+.alpha .say { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; padding: 0; margin: 0 4px 0 0; vertical-align: middle; border: 1px solid var(--rule); border-radius: 50%; background: var(--bg); color: var(--muted); cursor: pointer; }
+.alpha .say:hover, .alpha .say:focus-visible { border-color: var(--accent); color: var(--accent); }
+.alpha .say.playing { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.alpha .say .ico, .alpha .say svg { display: block; width: 15px; height: 15px; }
 .credit { font-size: .8rem; color: var(--muted); margin-top: 12px; }
 .alpha .lt .gk { font-size: 1em; line-height: inherit; }
 .alpha .nm { font-weight: 600; font-size: .9rem; line-height: 1.25; }
@@ -698,9 +702,10 @@ function alphabetBlock(phonetic) {
     const w = C.alphaWords[i];
     return '<div><button type="button" class="lt" data-say="' + esc(a[2]) + '" aria-label="Play the name ' + esc(a[2]) + '">' + esc(a[0]) + ' ' + esc(a[1]) + icon('sound') + '</button>' +
       '<span class="nm">' + esc(a[2]) + ' <span class="muted">' + esc(a[3]) + '</span></span><span class="tr">' + (phonetic ? 'say <b class="ph">' + esc(a[6]) + '</b>' : esc(a[4])) + '</span><span class="sd">' + esc(a[5]) + '</span>' +
-      '<span class="ex">' + esc(w[0]) + ' <span class="muted">' + esc(w[1]) + ', “' + esc(w[2]) + '”</span></span></div>';
+      '<span class="ex">' + (w[3] ? '<button type="button" class="say" data-say="' + esc(a[2]) + '-word" aria-label="Play ' + esc(w[0]) + ', ' + esc(w[2]) + '">' + icon('sound') + '</button>' : '') +
+      esc(w[0]) + ' <span class="muted">' + esc(w[1]) + ', “' + esc(w[2]) + '”</span></span></div>';
   }).join('') + '</div>' +
-    '<p class="credit">Tap a letter to hear its name. Recordings by Angela of <a href="https://freegreek.online/" target="_blank" rel="noopener">Alpha with Angela</a>, cut from “How to write the Greek Alphabet,” licensed <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA</a>.</p>';
+    '<p class="credit">Tap a letter to hear its name, and the speaker beside a word to hear the word. Recordings by Angela of <a href="https://freegreek.online/" target="_blank" rel="noopener">Alpha with Angela</a>, cut from her alphabet videos, licensed <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA</a>.</p>';
 }
 // One shared player for the alphabet recordings
 const sayPlayer = new Audio();

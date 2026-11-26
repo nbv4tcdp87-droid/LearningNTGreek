@@ -32,6 +32,16 @@ window.COURSE = window.COURSE || {};
     ['Ψ', 'ψ', 'psi', 'ψῖ', 'ps', 'ps as in lips', 'ps', 'lips'],
     ['Ω', 'ω', 'omega', 'ὦ μέγα', 'ō', 'o as in tone', 'oh', 'tone']
   ];
+  // One example word per letter, in the same order: [Greek, transliteration, meaning].
+  // Letter-name audio is audio/<English name>.m4a (audio/alpha.m4a). Example words have no audio yet.
+  C.alphaWords = [
+    ['ἀγάπη', 'agapē', 'love'], ['βλέπω', 'blepō', 'I see'], ['γράφω', 'graphō', 'I write'], ['δόξα', 'doxa', 'glory'],
+    ['ἐγώ', 'egō', 'I'], ['ζωή', 'zōē', 'life'], ['ἡμέρα', 'hēmera', 'day'], ['θεός', 'theos', 'God'],
+    ['Ἰησοῦς', 'Iēsous', 'Jesus'], ['κύριος', 'kyrios', 'Lord'], ['λόγος', 'logos', 'word'], ['μαθητής', 'mathētēs', 'disciple'],
+    ['νόμος', 'nomos', 'law'], ['ξένος', 'xenos', 'stranger'], ['ὁδός', 'hodos', 'way'], ['πατήρ', 'patēr', 'father'],
+    ['ῥῆμα', 'rhēma', 'saying'], ['σάρξ', 'sarx', 'flesh'], ['τέκνον', 'teknon', 'child'], ['ὕδωρ', 'hydōr', 'water'],
+    ['φῶς', 'phōs', 'light'], ['Χριστός', 'Christos', 'Christ'], ['ψυχή', 'psychē', 'soul'], ['ὥρα', 'hōra', 'hour']
+  ];
 
   C.greekNumerals = ['', 'αʹ', 'βʹ', 'γʹ', 'δʹ', 'εʹ', 'ϛʹ', 'ζʹ', 'ηʹ', 'θʹ', 'ιʹ',
     'ιαʹ', 'ιβʹ', 'ιγʹ', 'ιδʹ', 'ιεʹ', 'ιϛʹ', 'ιζʹ', 'ιηʹ', 'ιθʹ', 'κʹ'];
